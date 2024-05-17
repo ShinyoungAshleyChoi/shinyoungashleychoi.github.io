@@ -1138,6 +1138,42 @@ Modules - reusable parts of our design
     transform: translateX(0);
   }
 }
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.share-btn {
+  display: inline-block;
+  padding: 10px 15px;
+  margin-right: 10px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.share-btn i {
+  margin-right: 5px;
+}
+
+.facebook:hover {
+  background-color: #3b5998;
+}
+
+.twitter:hover {
+  background-color: #1da1f2;
+}
+
+.linkedin:hover {
+  background-color: #0077b5;
+}
+
+.whatsapp:hover {
+  background-color: #25d366;
+}
 
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
