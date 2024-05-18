@@ -24,3 +24,13 @@ function shareOnWhatsApp() {
   const shareUrl = `https://wa.me/?text=${url}`;
   window.open(shareUrl, '_blank', 'width=600,height=400');
 }
+function copyPageUrl() {
+  const pageUrl = window.location.href;
+  navigator.clipboard.writeText(pageUrl)
+    .then(() => {
+      alert('Page URL copied to clipboard!');
+    })
+    .catch((err) => {
+      console.error('Failed to copy URL: ', err);
+    });
+}
