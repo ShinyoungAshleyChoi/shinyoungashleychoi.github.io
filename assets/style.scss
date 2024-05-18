@@ -1138,10 +1138,12 @@ Modules - reusable parts of our design
     transform: translateX(0);
   }
 }
+
 .share-buttons {
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  font-size: 30%;
 }
 
 .share-btn {
