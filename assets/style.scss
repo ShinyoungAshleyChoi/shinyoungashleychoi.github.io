@@ -1139,44 +1139,12 @@ Modules - reusable parts of our design
   }
 }
 
-.share-buttons {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5px;
-  font-size: 50%;
-}
-
-.share-btn {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  margin: 0 10px;
-  background-color: #333;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
-}
 
 .share-btn i {
   margin-right: 5px;
 }
 
-.facebook:hover {
-  background-color: #3b5998;
-}
 
-.twitter:hover {
-  background-color: #1da1f2;
-}
-
-.linkedin:hover {
-  background-color: #0077b5;
-}
-
-.whatsapp:hover {
-  background-color: #25d366;
-}
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
