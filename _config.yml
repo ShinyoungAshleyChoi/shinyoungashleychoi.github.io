@@ -49,7 +49,7 @@ google_analytics:
 # Your website URL (e.g. http://amitmerchant1990.github.io or http://www.amitmerchant.com)
 # Used for Sitemap.xml and your RSS feed
 url: http://shinyoungashleychoi.github.io
-#ur: http://127.0.0.1:4000
+#url: http://127.0.0.1:4000
 enforce_ssl: https://shinyoungashleychoi.github.io
 
 # If you're hosting your site at a Project repository on GitHub pages
