@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Naverbot
+Allow: /
+
+Sitemap: https://shinyoungashleychoi.github.io/sitemap.xml
