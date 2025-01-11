@@ -1,23 +1,23 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'jekyll serve'. If you change this file, please restart the server process.
+name: Wangana
+description:  Jekyll theme
 
-# Site settings
-title: Shinyoung Choi
-email: choishin0@gmail.com
+sass:
+  sass_dir: assets/css/_sass
+  style: :compressed
 
-#write html inside the double quotes to display in jumbotron
-description: Developer's Delight
+markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "tables", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
 
+url: https://thesowah.github.io/wangana
+permalink: /:year/:month/:title/
+owner:
+    name: #
+    twitter: #
+    github: #
+    disqus_shortname: #
 
+ga_id: #
+ga_username: #
 
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://shinyoungashleychoi.github.io" # the base hostname & protocol for your site
-twitter_username:
-github_username:  shinyoungashleychoi
-
-# Build settings
-markdown: kramdown
+timezone: Africa/Accra
