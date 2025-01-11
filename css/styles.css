@@ -313,7 +313,7 @@ video {
     width: 100%; /* 화면 전체 너비 */
     position: static; /* 고정 해제 */
     margin: 0; /* 여백 제거 */
-    padding: 20px; /* 내부 여백 추가 */
+    padding: 5px; /* 내부 여백 추가 */
     overflow-y: auto;
   }
 
@@ -345,7 +345,7 @@ video {
 
   /* Posts (wrapper) */
   .wrapper {
-    padding: 20px;
+    padding: 0;
     margin: 0;
     width: 100%; /* 화면 전체 너비 */
   }
@@ -371,7 +371,7 @@ video {
     top: 0; /* 상단 위치 고정 */
     left: 0;
     width: 100%; /* 화면 전체 너비 */
-    height: 50px; /* 원하는 높이 설정 */
+    height: 30px; /* 원하는 높이 설정 */
     z-index: 1000; /* 다른 요소 위에 표시 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
     background-color: #f4f4f4; /* 배경색 */
@@ -382,12 +382,23 @@ video {
     margin: 0 15px; /* 링크 간격 */
     text-decoration: none; /* 밑줄 제거 */
     color: #333; /* 텍스트 색상 */
-    font-size: 16px; /* 글자 크기 */
+    font-size: 10px; /* 글자 크기 */
+    justify-content: center;
+    line-height: 30px;
   }
 
   .nav-inner a:hover {
     color: #007BFF; /* 호버 시 색상 */
     text-decoration: underline; /* 호버 시 밑줄 */
+  }
+
+  .icon {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5em;
+    background-size: 100% 100%;
   }
 
   /* Site title */
