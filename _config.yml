@@ -1,5 +1,5 @@
-name: Wangana
-description:  Jekyll theme
+name: Shinyoung CHoi
+description:  Developer's Delight
 
 sass:
   sass_dir: assets/css/_sass
@@ -9,15 +9,15 @@ markdown: redcarpet
 redcarpet:
   extensions: ["no_intra_emphasis", "tables", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
 
-url: https://thesowah.github.io/wangana
+url: https://shinyoungashleychoi.github.io/
 permalink: /:year/:month/:title/
 owner:
-    name: #
+    name: Shinyoung Choi
     twitter: #
-    github: #
+    github: https://shinyoungashleychoi.github.io
     disqus_shortname: #
 
 ga_id: #
 ga_username: #
 
-timezone: Africa/Accra
+timezone: Asia/Seoul
