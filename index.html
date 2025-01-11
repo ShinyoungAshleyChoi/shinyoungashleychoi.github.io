@@ -2,48 +2,43 @@
 layout: default
 ---
 
-<div class="posts">
-  {% for post in paginator.posts %}
-    <article class="post">
-      <a href="{{ site.baseurl }}{{ post.url }}">
-        <h1>{{ post.title }}</h1>
+<section>
+  <div class="jumbotron">
+    <div class="container">
+      {{site.description}}
 
-        <div>
-          <p class="post_date">{{ post.date | date: "%B %e, %Y" }}</p>
-        </div>
-      </a>
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
+    </div>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
-
-  <!-- pagination -->
-  {% if paginator.total_pages > 1 %}
-  <div class="pagination">
-    {% if paginator.previous_page %}
-      <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
-    {% else %}
-      <span>&laquo; Prev</span>
-    {% endif %}
-
-    {% for page in (1..paginator.total_pages) %}
-      {% if page == paginator.page %}
-        <span class="webjeda">{{ page }}</span>
-      {% elsif page == 1 %}
-        <a href="{{ '/' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
-      {% else %}
-        <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-      {% endif %}
-    {% endfor %}
-
-    {% if paginator.next_page %}
-      <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
-    {% else %}
-      <span>Next &raquo;</span>
-    {% endif %}
-  </div>
-  {% endif %}
 </div>
+</section>
+
+<section id="page-content">
+  <div class="container">
+    <div class="post-list">
+  {%  for post in site.posts %}
+  <div class="post-box">
+    <div class="post-title">
+    <a class="post-title" href="{{post.url | prepend:site.baseurl }}" > {{ post.title }}</a>
+    </div>
+    <div class="post-excerpt">
+      {{ post.content | strip_html | truncatewords:20}}
+    </div>
+    <div class="posted">
+      posted on
+      <span class="posted-on">
+
+        {{ post.date | date: "%A, %B %-d, %Y" }}
+      </span>
+      <span class="in">
+        in
+      </span>
+      <span class="categories-on">
+        {% for category in post.categories%}
+        {{category}} &nbsp;{% if forloop.last %}{% else %},{% endif %}
+        {% endfor %}
+      </span>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+</section>
