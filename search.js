@@ -11,10 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 searchResults.innerHTML = ""; // Clear previous results
 
                 if (query.length > 0) {
-                    const filteredPosts = data.filter((post) =>
-                        post.title.toLowerCase().includes(query) ||
-                        post.content.toLowerCase().includes(query)
-                    );
+                    const filteredPosts = data.filter((post) => {
+                        const contentMatch = post.content.toLowerCase().includes(query);
+                        const titleMatch = post.title.toLowerCase().includes(query);
+                        const tagMatch = post.tags.some(tag => tag.toLowerCase().includes(query));
+                        return contentMatch || titleMatch || tagMatch;
+                    });
 
                     if (filteredPosts.length > 0) {
                         filteredPosts.forEach((post) => {
@@ -27,5 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
             });
+        })
+        .catch((error) => {
+            console.error("Failed to load search index:", error);
         });
 });

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Second post
+tags: ["first", "tutorial"]
 ---
 수정하면?
 Blogging is fun!
