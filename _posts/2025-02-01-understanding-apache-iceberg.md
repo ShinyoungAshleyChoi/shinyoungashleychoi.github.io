@@ -51,6 +51,6 @@ iceberg 테이블의 아키텍쳐를 그림으로 표현하면 아래와 같습�
 
 
 [References]
-- https://www.tabular.io/apache-iceberg-cookbook/introduction-from-the-original-creators-of-iceberg/
-- https://iceberg.apache.org/docs/nightly/#user-experience
-- https://www.youtube.com/watch?v=xfAYLAFCLvM
+- <https://www.tabular.io/apache-iceberg-cookbook/introduction-from-the-original-creators-of-iceberg/>
+- <https://iceberg.apache.org/docs/nightly/#user-experience>
+- <https://www.youtube.com/watch?v=xfAYLAFCLvM>
