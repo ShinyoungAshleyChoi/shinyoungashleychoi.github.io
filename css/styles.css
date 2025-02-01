@@ -1,0 +1,419 @@
+html {
+  font-size: 16px;
+  font-family: monospace;
+}
+
+.search-container {
+  margin: 20px 0;
+}
+
+#search-input {
+  width: 90%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#search-results {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+#search-results li {
+  margin-bottom: 10px;
+}
+
+#search-results a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+#search-results a:hover {
+  text-decoration: underline;
+}
+
+.post-body {
+  margin-top: 40px; /* 위쪽 여백 제거 */
+  margin-bottom: 10px; /* 아래쪽 여백 */
+}
+
+.container {
+  display: flex;
+  height: 100vh; /* 전체 화면 높이 */
+}
+
+.sidebar {
+  width: 350px; /* 사이드바 고정 너비 */
+  margin-top: 40px;
+  overflow-y: auto;
+}
+
+.wrapper {
+  flex-grow: 1; /* 나머지 공간 차지 */
+  overflow-y: auto; /* 내용 스크롤 가능 */
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Header 스타일 */
+.site-header {
+  text-align: center;
+  background-color: #f4f4f4; /* 상단 배경색 */
+  padding: 20px 0;
+  border-bottom: 2px solid #ddd; /* 아래쪽 테두리 */
+}
+
+.site-title {
+  font-size: 36px; /* 제목 크기 */
+  font-weight: bold; /* 굵게 */
+  color: #333; /* 글자 색상 */
+  margin: 40px 0 0; /* 기본 여백 제거 */
+}
+
+.sidebar {
+  padding-top: 0;
+  position: fixed;
+}
+
+.logo {
+  display: block;
+  max-width: 336px;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.nav {
+  margin: 40px 0 0;
+  padding: 0 0 0 48px;
+  overflow: hidden;
+  list-style: none;
+}
+
+.wrapper {
+  padding-right: 20px;
+  position: relative;
+  margin-left: 400px;
+}
+
+.wrapper h1 {
+  margin-top: 0;
+  padding: 50px 0 0 0;
+  text-transform: lowercase;
+}
+
+body {
+  margin: 0;
+  padding: 0 30px 30px;
+}
+
+a {
+  color: inherit;
+}
+
+.post-link {
+  text-transform: lowercase;
+  display: block;
+  max-width: 1000px;
+  padding: 20px 30px;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  border: 2px dotted red;
+}
+
+.post-link:hover {
+  background: red;
+  color: white;
+  border: 2px dotted white;
+}
+
+.post-link:nth-child(4n+1) {
+  border-color: aqua;
+  border-style: outset;
+}
+
+.post-link:nth-child(4n+1):hover {
+  background: aqua;
+  color: inherit;
+  border: 2px outset white;
+}
+
+.post-link:nth-child(4n+2) {
+  border-color: magenta;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 0 0 1px white, 0 0 0 2px magenta;
+}
+
+.post-link:nth-child(4n+2):hover {
+  background: magenta;
+  color: white;
+}
+
+.post-link:nth-child(4n+3) {
+  border-color: yellow;
+  border-style: groove;
+}
+
+.post-link:nth-child(4n+3):hover {
+  background: yellow;
+  color: inherit;
+}
+
+.post-body {
+  line-height: 1.3em;
+  max-width: 1000px;
+}
+
+.post-body img {
+  max-width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.post-body a:nth-of-type(4n) {
+  color: red;
+}
+
+.post-body a:nth-of-type(4n+1) {
+  color: magenta;
+}
+
+.post-body a:nth-of-type(4n+2) {
+  color: blue;
+}
+
+.post-body a:nth-of-type(4n+3) {
+  color: green;
+}
+
+blockquote {
+  font-size: 1.2em;
+  font-style: italic;
+  line-height: 1.5em;
+  margin: 2em 0;
+  padding: 0 1em;
+  border-left: 4px dashed blue;
+}
+
+video {
+  width: 100%;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px; height: 0; overflow: hidden;
+}
+
+.video-container.skinny {
+  padding-bottom: 43.076923%;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  background-size: 100% 100%;
+}
+
+.icon.doc {
+  background-image:url(/img/doc.png);
+}
+
+.icon.info {
+  background-image:url(/img/info.png);
+}
+
+.icon.code {
+  background-image:url(/img/code.png);
+}
+
+.icon.link {
+  background-image:url(/img/link.png);
+}
+
+.icon.twitter {
+  background-image:url(/img/twitter.png);
+}
+
+.icon.github {
+  background-image:url(/img/github.png);
+}
+
+.nav a {
+  display: block;
+  margin-right: 32px;
+  margin-bottom: 32px;
+  /*float: left;*/
+  height: 32px;
+}
+
+.nav a {
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.tags ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tags li {
+  margin: 5px 0;
+}
+
+.tags a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+.tags a:hover {
+  text-decoration: underline;
+}
+
+.tag-posts ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tag-posts li {
+  margin: 10px 0;
+}
+
+/* 모바일 화면 전용 스타일 */
+@media screen and (max-width: 768px) {
+  /* 컨테이너: 세로 정렬 */
+  .container {
+    display: block; /* 플렉스 레이아웃 대신 블록으로 변경 */
+    height: auto; /* 높이 자동 조정 */
+  }
+
+  /* 사이드바 */
+  .sidebar {
+    width: 100%; /* 화면 전체 너비 */
+    position: static; /* 고정 해제 */
+    margin: 0; /* 여백 제거 */
+    padding: 5px; /* 내부 여백 추가 */
+    overflow-y: auto;
+  }
+
+  /* Site title */
+  .site-header {
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+    border-bottom: none; /* 테두리 제거 */
+  }
+
+  .site-title {
+    font-size: 24px; /* 제목 크기 축소 */
+    margin: 10px 0;
+  }
+
+  /* 로고 */
+  .logo {
+    display: block;
+    text-align: center;
+    margin: 20px auto; /* 중앙 정렬 */
+    max-width: 80%; /* 로고 크기 축소 */
+  }
+
+  .logo img {
+    max-width: 100%; /* 로고 이미지 반응형 */
+    height: auto;
+  }
+
+  /* Posts (wrapper) */
+  .wrapper {
+    padding: 0;
+    margin: 0;
+    width: 100%; /* 화면 전체 너비 */
+  }
+
+  .wrapper h1 {
+    font-size: 18px; /* 제목 크기 축소 */
+    text-align: center; /* 중앙 정렬 */
+  }
+
+  /* Posts list */
+  .post-link {
+    max-width: 100%; /* 가로 제한 해제 */
+    padding: 15px;
+    margin: 20px 0; /* 위아래 간격 */
+  }
+
+  /* Navigation bar */
+  .nav-inner {
+    display: flex; /* Flexbox로 설정 */
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    position: fixed; /* 화면 맨 상단에 고정 */
+    top: 0; /* 상단 위치 고정 */
+    left: 0;
+    width: 100%; /* 화면 전체 너비 */
+    height: 30px; /* 원하는 높이 설정 */
+    z-index: 1000; /* 다른 요소 위에 표시 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    background-color: #f4f4f4; /* 배경색 */
+  }
+
+  /* Links in nav-inner */
+  .nav-inner a {
+    margin: 0 15px; /* 링크 간격 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: #333; /* 텍스트 색상 */
+    font-size: 10px; /* 글자 크기 */
+    justify-content: center;
+    line-height: 30px;
+  }
+
+  .nav-inner a:hover {
+    color: #007BFF; /* 호버 시 색상 */
+    text-decoration: underline; /* 호버 시 밑줄 */
+  }
+
+  .icon {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5em;
+    background-size: 100% 100%;
+  }
+
+  /* Site title */
+  .site-title {
+    margin-top: 70px; /* nav-inner 높이(50px) + 여백(20px) */
+    text-align: center;
+    font-size: 24px; /* 제목 크기 축소 */
+    font-weight: bold; /* 굵게 */
+    color: #333; /* 글자 색상 */
+  }
+
+  /* Site header */
+  .site-header {
+    padding: 20px 0;
+    margin: 0;
+    border-bottom: none; /* 테두리 제거 */
+  }
+}

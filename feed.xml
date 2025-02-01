@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <description>Shinyoung Choi with all the data in the world</description>
+    <link>https://shinyoungashleychoi.github.io</link>
+    <atom:link href="https://shinyoungashleychoi.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    
+      
+        <item>
+          <title>Apache Iceberg 이해하기!</title>
+          <pubDate>Sat, 01 Feb 2025 00:00:00 +0000</pubDate>
+          <link></link>
+          <guid isPermaLink="true"></guid>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; box-shadow: 0 0 0 1px white, 0 0 0 2px magenta; padding: 20px 30px; border: 1px solid red;</category>
+        </item>
+      
+    
+      
+        <item>
+          <title>Welcome!</title>
+          <pubDate>Sat, 11 Jan 2025 00:00:00 +0000</pubDate>
+          <link></link>
+          <guid isPermaLink="true"></guid>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px groove yellow;</category>
+        </item>
+      
+    
+  </channel>
+</rss>
