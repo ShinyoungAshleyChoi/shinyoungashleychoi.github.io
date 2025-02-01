@@ -3,7 +3,7 @@ name: Deploy Jekyll to GitHub Pages
 on:
   push:
     branches:
-      - main  # 또는 배포하는 브랜치
+      - master  # 또는 배포하는 브랜치
 
 jobs:
   build:
