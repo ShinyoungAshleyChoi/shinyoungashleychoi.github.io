@@ -42,6 +42,7 @@ html {
 .container {
   display: flex;
   height: 100vh; /* 전체 화면 높이 */
+  margin-top: 20px; /* 헤더 높이만큼 아래로 내림 */
 }
 
 .sidebar {
@@ -55,21 +56,20 @@ html {
   overflow-y: auto; /* 내용 스크롤 가능 */
   padding: 20px;
   min-height: 100vh;
+  z-index: 9999;
 }
 
 /* Header 스타일 */
 .site-header {
-  text-align: center;
-  background-color: #f4f4f4; /* 상단 배경색 */
-  padding: 20px 0;
-  border-bottom: 2px solid #ddd; /* 아래쪽 테두리 */
+  text-align: left;
+  padding: 10px 0;
 }
 
 .site-title {
   font-size: 36px; /* 제목 크기 */
   font-weight: bold; /* 굵게 */
   color: #333; /* 글자 색상 */
-  margin: 40px 0 0; /* 기본 여백 제거 */
+  margin: 20px 0 0; /* 기본 여백 제거 */
 }
 
 .sidebar {
@@ -399,21 +399,5 @@ video {
     vertical-align: middle;
     margin-right: 0.5em;
     background-size: 100% 100%;
-  }
-
-  /* Site title */
-  .site-title {
-    margin-top: 70px; /* nav-inner 높이(50px) + 여백(20px) */
-    text-align: center;
-    font-size: 24px; /* 제목 크기 축소 */
-    font-weight: bold; /* 굵게 */
-    color: #333; /* 글자 색상 */
-  }
-
-  /* Site header */
-  .site-header {
-    padding: 20px 0;
-    margin: 0;
-    border-bottom: none; /* 테두리 제거 */
   }
 }
