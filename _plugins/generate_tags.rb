@@ -3,9 +3,10 @@ module Jekyll
     safe true
 
     def generate(site)
-      site.tags.each do |tag, posts|
-          slug = Jekyll::Utils.slugify(tag)
-        site.pages << TagPage.new(site, site.source, File.join('tags', slug), tag)
+      if site.layouts.key? "tag"
+        site.tags.each do |tag, posts|
+          site.pages << TagPage.new(site, site.source, "tags/#{tag}", tag)
+        end
       end
     end
   end
@@ -15,12 +16,12 @@ module Jekyll
       @site = site
       @base = base
       @dir = dir
-      @name = 'index.html'
+      @name = "index.html"
 
       self.process(@name)
-      self.read_yaml(File.join(base, '_layouts'), 'tag.html')
-      self.data['tag'] = tag
-      self.data['title'] = "Posts tagged with #{tag}"
+      self.read_yaml(File.join(base, "_layouts"), "tag.html")
+      self.data["tag"] = tag
+      self.data["title"] = "Posts tagged with \"#{tag}\""
     end
   end
 end
