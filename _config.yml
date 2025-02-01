@@ -7,8 +7,6 @@ description: "Shinyoung Choi with all the data in the world"
 url: https://shinyoungashleychoi.github.io
 paginate: 5
 paginate_path: "/page:num/"
+safe: false
 plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
   - jekyll-paginate
