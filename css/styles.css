@@ -328,6 +328,10 @@ video {
 
   /* Site title */
   .site-header {
+    position: fixed;
+    top: 30px;
+    display: flex;
+    justify-content: center;
     text-align: center;
     padding: 20px 0;
     margin: 0;
@@ -335,7 +339,7 @@ video {
   }
 
   .site-title {
-    font-size: 24px; /* 제목 크기 축소 */
+    font-size: 36px; /* 제목 크기 축소 */
     margin: 10px 0;
   }
 
@@ -343,7 +347,7 @@ video {
   .logo {
     display: block;
     text-align: center;
-    margin: 20px auto; /* 중앙 정렬 */
+    margin: 60px auto; /* 중앙 정렬 */
     max-width: 80%; /* 로고 크기 축소 */
   }
 
