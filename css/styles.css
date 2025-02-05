@@ -333,7 +333,7 @@ video {
     display: flex;
     justify-content: center;
     text-align: center;
-    padding: 20px 0;
+    padding: 20px 20px;
     margin: 0;
     border-bottom: none; /* 테두리 제거 */
   }
