@@ -347,7 +347,7 @@ video {
   .logo {
     display: block;
     text-align: center;
-    margin: 60px auto; /* 중앙 정렬 */
+    margin: 80px auto; /* 중앙 정렬 */
     max-width: 80%; /* 로고 크기 축소 */
   }
 
