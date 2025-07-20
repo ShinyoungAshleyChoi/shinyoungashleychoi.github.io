@@ -8,11 +8,21 @@
     
       
         <item>
+          <title>Understanding Apache Iceberg; Introduction</title>
+          <pubDate>Sun, 20 Jul 2025 00:00:00 +0000</pubDate>
+          <link></link>
+          <guid isPermaLink="true"></guid>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; box-shadow: 0 0 0 1px white, 0 0 0 2px magenta; padding: 20px 30px; border: 1px solid red;</category>
+        </item>
+      
+    
+      
+        <item>
           <title>Apache Iceberg 이해하기!</title>
           <pubDate>Sat, 01 Feb 2025 00:00:00 +0000</pubDate>
           <link></link>
           <guid isPermaLink="true"></guid>
-          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; box-shadow: 0 0 0 1px white, 0 0 0 2px magenta; padding: 20px 30px; border: 1px solid red;</category>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px groove yellow;</category>
         </item>
       
     
@@ -22,7 +32,7 @@
           <pubDate>Sat, 11 Jan 2025 00:00:00 +0000</pubDate>
           <link></link>
           <guid isPermaLink="true"></guid>
-          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px groove yellow;</category>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px dotted red;</category>
         </item>
       
     
