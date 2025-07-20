@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Understanding Apache Iceberg; Introduction
+title: Understanding Apache Iceberg (1) - Introduction
 tags: ["iceberg", "bigdata", "datalake"]
 ---
 
