@@ -25,7 +25,7 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reily)의 내용을 
 - Hive나 전통적인 시스템에서는 timestamp 컬럼으로 파티셔닝 하면, 내부적으로는 event_year, event_month, event_day같은 식으로 다른 컬럼들이 생성되어 파티셔닝됨
 - `event_timestamp >= DATE_SUB(CURRENT_DATE, INTERVAL 90 DAY)`
 - Hive에서 최근 90일간의 평균 수익을 얻기 위해 위와 같은 필터링을 한다면, event_year, event_month, event_day를 직접 필터링하는게 아니기 때문에 전체 스캔을 하게 됨 
-- 하지만 Apache Iceberg에서는 파티녀신ㅇ 컬럼을 직접 쿼리할 필요가 없도록 내부에서 자동으로 처리해줌
+- 하지만 Apache Iceberg에서는 파티셔닝 컬럼을 직접 쿼리할 필요가 없도록 내부에서 자동으로 처리해줌
 
 ## 행 기반 테이블 운영 (Row-level table operations)
 - Apache Iceberg에서는 행 단위 업데이트를 copy-on-write(COW) 혹은 merge-on-read(MOR) 방식으로 처리
