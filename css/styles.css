@@ -56,6 +56,12 @@ html {
   font-size: 1.8em; /* Ensure h1 in content is smaller than post title */
 }
 
+.post-end-block {
+  width: 20px;
+  height: 20px;
+  margin: 40px 0 20px 0;
+}
+
 .container {
   display: flex;
   height: 100vh; /* 전체 화면 높이 */
