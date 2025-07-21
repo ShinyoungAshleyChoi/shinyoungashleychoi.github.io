@@ -56,4 +56,4 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reily)의 내용을 
 - 확장성 (Scalability): 위 요구사항들이 페타바이트급 데이터에서 달성 가능해야 함. (Iceberg는 넷플릭스에서 만들었음!)
 
 
-[^1]: *Apache Iceberg: The Definitive Guide*, O'Reilly Media, 2023. p.16
+[^1]: *Apache Iceberg: The Definitive Guide*, O'Reilly Media, 2024. p.16
