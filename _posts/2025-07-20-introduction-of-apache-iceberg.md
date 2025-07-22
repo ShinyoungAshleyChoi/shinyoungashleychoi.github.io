@@ -4,7 +4,7 @@ title: Understanding Apache Iceberg (1) - Introduction
 tags: ["iceberg", "bigdata", "datalake"]
 ---
 
-_이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reily)의 내용을 정리한 것 입니다._
+_이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을 정리한 것 입니다._
 
 # Apache Iceberg 소개
  - 성능 및 일관성 외 여러 Hive의 약점들을 극복하기 위해 Netflix에서 개발한 **테이블 포맷**

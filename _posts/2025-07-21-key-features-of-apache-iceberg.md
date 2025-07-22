@@ -4,7 +4,7 @@ title: Understanding Apache Iceberg (2) - Key Features
 tags: ["iceberg", "bigdata", "datalake"]
 ---
 
-_이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reily)의 내용을 정리한 것 입니다._
+_이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을 정리한 것 입니다._
 
 # Apache Iceberg의 주요 특징
 
