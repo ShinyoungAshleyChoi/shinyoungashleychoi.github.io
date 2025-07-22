@@ -55,7 +55,7 @@
   <li>파티셔닝을 변경해야 할 때 선택 가능한 유일한 방법은 전체 테이블을 다시 쓰는 것, 아니면 현재 파티셔닝을 유지하면서 잠재적 성능 향상을 희생하는 것이었음</li>
   <li>Apache Iceberg에서는 파티셔닝 변경을 위해 메타데이터만 수정되면 되므로 테이블과 전체 데이터를 다시 쓰지 않고 언제든 파티셔닝을 업데이트 할 수 있음</li>
   <li>아래 그림에서, 파티셔닝은 처음에는 month를 기준으로 되었다가 day기준으로 변경됨, 이전 파티셔닝과 변경된 파티셔닝이 적용된 데이터를 모두 가져올 때 파티셔닝 방식에 따라 실행계획이 분리됨
-<img src="/img/posts/2025-07-21-key-features-of-apache-iceberg-1.png" alt="Partition evolution" /></li>
+<img src="/img/posts/2025-07-21-key-features-of-apache-iceberg-1.png" alt="Partition evolution" /> <sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></li>
 </ul>
 
 <h2 id="숨겨진-파티셔닝-hidden-partitioning">숨겨진 파티셔닝 (Hidden Partitioning)</h2>
@@ -92,6 +92,14 @@
 <ul>
   <li>컬럼 추가/삭제, 컬럼 이름 변경, 컬럼 데이터 타입 변경등이 가능</li>
 </ul>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>https://www.dremio.com/blog/future-proof-partitioning-and-fewer-table-rewrites-with-apache-iceberg/ <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
   </div>
   <div class="post-end-block"></div>
