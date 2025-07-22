@@ -22,7 +22,7 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을
 
   | ![Partition evolution](/img/posts/2025-07-21-key-features-of-apache-iceberg-1.png) |
   |:----------------------------------------------------------------------------------:|
-  |                                       그림1[^]                                       |
+  |                                      그림1[^1]                                       |
 
 ## 숨겨진 파티셔닝 (Hidden Partitioning)
 - Hive나 전통적인 시스템에서는 timestamp 컬럼으로 파티셔닝 하면, 내부적으로는 event_year, event_month, event_day같은 식으로 다른 컬럼들이 생성되어 파티셔닝됨
