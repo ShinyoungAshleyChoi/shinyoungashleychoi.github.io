@@ -19,7 +19,7 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을
 - 파티셔닝을 변경해야 할 때 선택 가능한 유일한 방법은 전체 테이블을 다시 쓰는 것, 아니면 현재 파티셔닝을 유지하면서 잠재적 성능 향상을 희생하는 것이었음
 - Apache Iceberg에서는 파티셔닝 변경을 위해 메타데이터만 수정되면 되므로 테이블과 전체 데이터를 다시 쓰지 않고 언제든 파티셔닝을 업데이트 할 수 있음
 - 아래 그림에서, 파티셔닝은 처음에는 month를 기준으로 되었다가 day기준으로 변경됨, 이전 파티셔닝과 변경된 파티셔닝이 적용된 데이터를 모두 가져올 때 파티셔닝 방식에 따라 실행계획이 분리됨
-![Partition evolution](/img/posts/2025-07-21-key-features-of-apache-iceberg-1.png)
+![Partition evolution](/img/posts/2025-07-21-key-features-of-apache-iceberg-1.png) [^1]
 
 ## 숨겨진 파티셔닝 (Hidden Partitioning)
 - Hive나 전통적인 시스템에서는 timestamp 컬럼으로 파티셔닝 하면, 내부적으로는 event_year, event_month, event_day같은 식으로 다른 컬럼들이 생성되어 파티셔닝됨
@@ -42,3 +42,9 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을
 
 ## 스키마 진화 (Schema evolution)
 - 컬럼 추가/삭제, 컬럼 이름 변경, 컬럼 데이터 타입 변경등이 가능
+
+
+[^1]: https://www.dremio.com/blog/future-proof-partitioning-and-fewer-table-rewrites-with-apache-iceberg/
+
+
+
