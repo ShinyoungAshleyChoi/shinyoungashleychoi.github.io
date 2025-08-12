@@ -26,6 +26,7 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을
   - 압축 효율이 좋아서 저장 공간을 적게 차지하고 읽기 속도가 높아지는 이점이 있음
 
 #### Parquet 파일의 내부 구조
+
   | ![The architecture of a Parquet file](/img/posts/2025-07-22-figure1.png) |
   |:------------------------------------------------------------------------:|
   |                           parquet 파일 아키텍쳐[^1]                            |
