@@ -85,4 +85,4 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을
   LIMIT 1
   ```
 
-[^1] https://parquet.apache.org/docs/file-format/
+[^1]: https://parquet.apache.org/docs/file-format/
