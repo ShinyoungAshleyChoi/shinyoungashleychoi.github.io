@@ -65,7 +65,7 @@ _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을
 - 메타데이터 파일은 특정 시점의 Iceberg 테이블에 관한 메타데이터를 저장한다.
 - 각 시점 마다 변경이 이루어지면 메타데이터 파일이 생성되고 카탈로그에 의해 원자적으로 최신 메타데이터 파일로 등록된다.
 - 테이블 커밋 히스토리는 선형적이며 다중 쓰기에 도움을 준다.
-- [메타데이터 파일 예시]()https://github.com/developer-advocacy-dremio/definitive-guide-to-apache-iceberg/blob/main/Resources/Chapter_2/metadata-file.json
+- [메타데이터 파일 예시](https://github.com/developer-advocacy-dremio/definitive-guide-to-apache-iceberg/blob/main/Resources/Chapter_2/metadata-file.json)
 
 ### 퍼핀 파일(Puffin Files)
 - 퍼핀 파일은 좀 더 넓은 범위의 쿼리의 성능을 향상시키기 위해 데이터에 관련된 통계정보와 인덱스들을 저장한다.
