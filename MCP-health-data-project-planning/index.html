@@ -1,0 +1,216 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Developer's Delight</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="shortcut icon" href="/img/favicon.png">
+</head>
+<body>
+
+<!-- 블로그 제목을 항상 보이게 고정 -->
+<header class="site-header">
+    <h1 class="site-title">
+        Developer's Delight
+    </h1>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+    <a href="/" class="logo">
+        <img src="/img/favicon.png">
+    </a>
+    <ul class="nav">
+        <div class="nav-inner">
+            <li><a href="/about/"><span class="icon info"></span>about</a></li>
+            <li><a href="/search/"><span class="icon doc"></span>search</a></li>
+            <li><a href="/tags/"><span class="icon code"></span>tags</a></li>
+            <li><a href="http://github.com/shinyoungashleychoi"><span class="icon github"></span>github</a></li>
+        </div>
+
+    </ul>
+</div>
+    <div class="wrapper">
+        <div class="post">
+  <h1 class="post-title">MCP로 AI에 내 헬스 데이터 연결하기! (기획 & 간단 설계)</h1>
+  <div class="post-meta">
+    <p>Posted on August 11, 2025</p>
+  </div>
+  <div class="post-body">
+    <h1 id="mcp로-ai에-내-헬스-데이터-연결하기">MCP로 AI에 내 헬스 데이터 연결하기!</h1>
+
+<hr />
+
+<h2 id="1-프로젝트-개요"><strong>1. 프로젝트 개요</strong></h2>
+
+<ul>
+  <li><strong>프로젝트명</strong>: Real-time Health Data MCP Server (AI Agent Query Focus)</li>
+  <li><strong>배경 및 필요성</strong>
+    <ul>
+      <li>스마트폰과 웨어러블을 통한 개인 헬스 데이터 수집이 일상화되면서, <strong>AI가 실시간으로 데이터에 접근하여 분석·피드백</strong>을 주는 서비스 수요 증가.</li>
+      <li>기존 헬스 데이터 분석은 배치 처리 중심이라, 즉각적인 사용자 질의응답에 제약이 있음.</li>
+    </ul>
+  </li>
+  <li><strong>목표</strong>
+    <ul>
+      <li>iOS HealthKit과 MCP 서버를 연동해 실시간 헬스 데이터를 안전하게 수집하고, AI Agent가 대화 중에 바로 질의·응답할 수 있는 환경을 구축.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="2-주요-기능"><strong>2. 주요 기능</strong></h2>
+
+<ul>
+  <li>실시간 헬스 데이터 수집 (걸음수, 심박수, 수면, 운동)</li>
+  <li>이벤트 기반 증분 동기화 (Observer Query + Anchored Query)</li>
+  <li>안전한 데이터 전송 (HTTPS/mTLS, Token 인증)</li>
+  <li>원본 데이터 Parquet 저장 (일 단위 파티션)</li>
+  <li>DuckDB 기반 빠른 질의 처리 (최근 데이터 위주)</li>
+  <li>MCP Tools: getSteps, getWorkouts, getHeartRateStats</li>
+  <li>MCP Resources: weekly_report.md(주간 리포트), 일간 요약 Parquet</li>
+</ul>
+
+<hr />
+
+<h2 id="3-시스템-아키텍처"><strong>3. 시스템 아키텍처</strong></h2>
+
+<p><img src="/img/posts/2025-08-11-design.png" alt="a tough Architecture" /></p>
+
+<ul>
+  <li>
+    <p><strong>데이터 흐름</strong>:</p>
+
+    <p>iOS 브리지 앱 → HTTPS/mTLS 전송 → MCP 서버 → Parquet 저장 → DuckDB 질의 → MCP Tools/Resources → AI Agent</p>
+  </li>
+  <li><strong>저장 구조</strong>:
+    <ul>
+      <li>bronze/quantity_events/dt=YYYY-MM-DD/*.parquet</li>
+      <li>bronze/workouts/dt=YYYY-MM-DD/*.parquet</li>
+    </ul>
+  </li>
+  <li><strong>쿼리 처리 방식</strong>:
+    <ul>
+      <li>최근 30일 캐시(Parquet) → DuckDB → 응답</li>
+      <li>범위 초과 시 직접 Parquet 스캔</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="4-기술-스택"><strong>4. 기술 스택</strong></h2>
+
+<ul>
+  <li><strong>클라이언트(iOS)</strong>: Swift/SwiftUI, HealthKit API</li>
+  <li><strong>서버</strong>: Python + FastAPI, Node.js, @modelcontextprotocol/sdk</li>
+  <li><strong>저장소</strong>: Parquet (S3 또는 로컬), DuckDB</li>
+  <li><strong>보안</strong>: TLS/mTLS, Bearer Token 인증</li>
+  <li><strong>기타</strong>: Docker, GitHub Actions(CI/CD)</li>
+</ul>
+
+<hr />
+
+<h2 id="5-데이터-모델"><strong>5. 데이터 모델</strong></h2>
+
+<ul>
+  <li><strong>Quantity 데이터</strong>: 걸음수, 심박수 등 (value, unit, start_ts, end_ts, uuid)</li>
+  <li><strong>Category 데이터</strong>: 수면 분석, 활동 상태 등 (value, start_ts, end_ts, uuid)</li>
+  <li><strong>Workout 데이터</strong>: 운동 타입, 거리, 시간, 칼로리 등 (activity, distance, duration, energy)</li>
+  <li><strong>메타데이터</strong>: uuid, ingest_ts, device_id, dt 파티션</li>
+</ul>
+
+<hr />
+
+<h2 id="6-보안-및-개인정보-보호-정책"><strong>6. 보안 및 개인정보 보호 정책</strong></h2>
+
+<ul>
+  <li>HealthKit 권한 최소화 (필요 데이터 타입만 요청)</li>
+  <li>모든 전송 구간 TLS/mTLS 암호화</li>
+  <li>Token 기반 인증 및 Rate Limit 적용</li>
+  <li>민감 데이터 로깅 금지</li>
+  <li>삭제 이벤트 수신 시 Parquet에서 삭제 반영</li>
+</ul>
+
+<hr />
+
+<h2 id="7-활용-시나리오"><strong>7. 활용 시나리오</strong></h2>
+
+<ol>
+  <li><strong>AI 대화형 질의</strong>: “지난 7일 걸음수 평균 보여줘” → MCP Tool 호출 → DuckDB 응답</li>
+  <li><strong>운동 분석</strong>: “최근 러닝 워크아웃 요약해줘” → Parquet 필터링 후 결과 반환</li>
+  <li><strong>건강 리포트 자동 생성</strong>: 주간 데이터 집계 후 weekly_report.md 생성</li>
+</ol>
+
+<hr />
+
+<h2 id="8-프로젝트-일정"><strong>8. 프로젝트 일정</strong></h2>
+<p><img src="/img/posts/2025-08-11-schedule.png" alt="일정" />
+—</p>
+
+<h2 id="9-확장-방안">9. 확장 방안</h2>
+
+<h3 id="1-데이터-레이어-확장-bronze--silver--gold"><strong>1. 데이터 레이어 확장 (Bronze → Silver → Gold)</strong></h3>
+
+<ul>
+  <li><strong>Bronze Layer (원본 저장)</strong>
+    <ul>
+      <li>HealthKit에서 수집한 원본 데이터를 Parquet로 일 단위 파티션 저장</li>
+      <li>중복/결측 포함, 원본 그대로 유지 → 재처리, 오류 복구 가능</li>
+    </ul>
+  </li>
+  <li><strong>Silver Layer (정제·표준화)</strong>
+    <ul>
+      <li>Iceberg 테이블로 관리, 스키마 표준화, 단위 변환, 다중 기기 데이터 병합</li>
+      <li>ACID 트랜잭션 및 스냅샷 기능으로 데이터 정합성 확보</li>
+    </ul>
+  </li>
+  <li><strong>Gold Layer (집계·최종 분석)</strong>
+    <ul>
+      <li>Airflow ETL로 주간/월간 통계 생성 (예: daily_steps, weekly_hr_stats)</li>
+      <li>AI Agent 및 대시보드가 즉시 사용할 수 있는 형태로 제공</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="2-기술-확장"><strong>2. 기술 확장</strong></h3>
+
+<ul>
+  <li><strong>배치 파이프라인 도입</strong>
+    <ul>
+      <li>Apache Airflow + PySpark 기반 ETL로 실버/골드 테이블 갱신</li>
+      <li>스케줄러를 통한 자동화 및 모니터링</li>
+    </ul>
+  </li>
+  <li><strong>장기 분석 지원</strong>
+    <ul>
+      <li>Iceberg를 통한 수년치 데이터 관리 및 schema evolution 지원</li>
+      <li>장기 추세 분석, 사용자 맞춤형 건강 코칭 모델 가능</li>
+    </ul>
+  </li>
+  <li><strong>실시간 + 배치 하이브리드</strong>
+    <ul>
+      <li>현재 실시간 MCP Tools 기반 질의에, 배치 기반 MCP Resources를 결합</li>
+      <li>최신 데이터 + 누적 통계 모두 대응 가능</li>
+    </ul>
+  </li>
+  <li><strong>이상 감지 시 알림 기능 추가</strong>
+    <ul>
+      <li><strong>규칙</strong>: 절대 임계, 급상승, 급격 변화, 휴지기(쿨다운)</li>
+      <li><strong>채널</strong>: APNs + 카톡 + Email(백업)</li>
+      <li><strong>운영</strong>: 개인 임계값 학습, 오탐 감소 로직, 일시중지 토글</li>
+    </ul>
+  </li>
+</ul>
+
+  </div>
+  <div class="post-end-block"></div>
+</div>
+    </div>
+</div>
+
+<script src="/search.js"></script>
+
+</body>
+</html>
