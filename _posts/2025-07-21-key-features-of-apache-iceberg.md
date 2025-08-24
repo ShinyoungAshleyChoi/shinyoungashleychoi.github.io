@@ -2,7 +2,14 @@
 layout: post
 title: Understanding Apache Iceberg (2) - Key Features
 tags: ["iceberg", "bigdata", "datalake"]
+date: 2025-07-21 15:00:00
+last_modified_at: 2025-07-21 15:00:00
+sitemap:
+  changefreq: weekly
+  priority: 0.5
 ---
+
+
 
 _이 글의 내용은 Apache Iceberg: The Definite Guide (O'Reilly)의 내용을 정리한 것 입니다._
 

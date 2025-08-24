@@ -2,6 +2,11 @@
 layout: post
 title: "[사이드프로젝트] MCP로 AI에 내 헬스 데이터 연결하기! (기획 & 간단 설계)"
 tags: ["MCP", "vibe coding", "real-time"]
+date: 2025-08-11 15:00:00
+last_modified_at: 2025-08-11 15:00:00
+sitemap:
+  changefreq: weekly
+  priority: 0.5
 ---
 
 # MCP로 AI에 내 헬스 데이터 연결하기!
