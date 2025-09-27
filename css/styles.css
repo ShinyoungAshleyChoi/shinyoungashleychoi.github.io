@@ -115,8 +115,12 @@ html {
 }
 
 .logo img {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* 사파리 호환성 */
+  max-width: 100%; /* 최대 너비 제한 */
+  max-height: 300px; /* 최대 높이 제한으로 사파리에서 늘어남 방지 */
+  display: block; /* 블록 요소로 설정 */
 }
 
 .nav {
