@@ -96,6 +96,7 @@ html {
   justify-content: left;
 }
 
+
 .site-title {
   font-size: 36px; /* 제목 크기 */
   font-weight: bold; /* 굵게 */
@@ -111,15 +112,11 @@ html {
 .logo {
   display: block;
   max-width: 336px;
-  text-align: center;
 }
 
-/* 로고 이미지 비율 유지 수정 - 사파리 호환성 개선 */
 .logo img {
-  max-width: 100%;
-  height: auto; /* 비율 유지 */
-  width: auto; /* 자동 너비 */
-  object-fit: contain; /* 사파리 호환성 */
+  width: 100%;
+  height: 100%;
 }
 
 .nav {
@@ -341,7 +338,6 @@ video {
   .container {
     display: block; /* 플렉스 레이아웃 대신 블록으로 변경 */
     height: auto; /* 높이 자동 조정 */
-    margin-top: 0; /* 상단 여백 제거 */
   }
 
   /* 사이드바 */
@@ -349,125 +345,96 @@ video {
     width: 100%; /* 화면 전체 너비 */
     position: static; /* 고정 해제 */
     margin: 0; /* 여백 제거 */
-    padding: 10px; /* 내부 여백 추가 */
-    overflow-y: visible; /* 스크롤 해제 */
+    padding: 5px; /* 내부 여백 추가 */
+    overflow-y: auto;
   }
 
-  /* Site title - 모바일에서 숨김 */
+  /* Site title */
   .site-header {
-    display: none; /* 모바일에서는 헤더 숨김 */
+    position: absolute;
+    width: 100%;
+    top: 30px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+    border-bottom: none; /* 테두리 제거 */
   }
 
-  /* 로고 - 모바일 최적화 */
+  .site-title {
+    font-size: 7vw; /* 제목 크기 축소 */
+    margin: 10px 0;
+  }
+
+  /* 로고 */
   .logo {
     display: block;
     text-align: center;
-    margin: 20px auto; /* 중앙 정렬 */
-    max-width: 150px; /* 로고 크기 제한 */
+    margin: 80px auto; /* 중앙 정렬 */
+    max-width: 80%; /* 로고 크기 축소 */
   }
 
   .logo img {
     max-width: 100%; /* 로고 이미지 반응형 */
     height: auto;
-    width: auto;
-    object-fit: contain; /* 사파리 호환성 */
-  }
-
-  /* Navigation - 모바일 최적화 */
-  .nav {
-    margin: 20px 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-  }
-
-  .nav-inner {
-    display: flex; /* Flexbox로 설정 */
-    justify-content: center; /* 중앙 정렬 */
-    align-items: center; /* 수직 중앙 정렬 */
-    flex-wrap: wrap; /* 줄바꿈 허용 */
-    gap: 15px; /* 아이템 간격 */
-  }
-
-  /* Navigation links */
-  .nav-inner li {
-    margin: 0; /* 기본 마진 제거 */
-  }
-
-  .nav-inner a {
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    white-space: nowrap;
-  }
-
-  .nav-inner a:hover {
-    color: #007BFF;
-    background-color: #e8f4fd;
-    border-color: #007BFF;
   }
 
   /* Posts (wrapper) */
   .wrapper {
-    padding: 20px;
+    padding: 0;
     margin: 0;
     width: 100%; /* 화면 전체 너비 */
   }
 
   .wrapper h1 {
-    font-size: 24px; /* 제목 크기 */
+    font-size: 18px; /* 제목 크기 축소 */
     text-align: center; /* 중앙 정렬 */
-    margin: 20px 0;
   }
 
   /* Posts list */
   .post-link {
     max-width: 100%; /* 가로 제한 해제 */
     padding: 15px;
-    margin: 15px 0; /* 위아래 간격 */
+    margin: 20px 0; /* 위아래 간격 */
   }
 
-  /* Icons - 모바일 크기 조정 */
+  /* Navigation bar */
+  .nav-inner {
+    display: flex; /* Flexbox로 설정 */
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    position: fixed; /* 화면 맨 상단에 고정 */
+    top: 0; /* 상단 위치 고정 */
+    left: 0;
+    width: 100%; /* 화면 전체 너비 */
+    height: 30px; /* 원하는 높이 설정 */
+    z-index: 1000; /* 다른 요소 위에 표시 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    background-color: #f4f4f4; /* 배경색 */
+  }
+
+  /* Links in nav-inner */
+  .nav-inner a {
+    margin: 0 15px; /* 링크 간격 */
+    text-decoration: none; /* 밑줄 제거 */
+    color: #333; /* 텍스트 색상 */
+    font-size: 10px; /* 글자 크기 */
+    justify-content: center;
+    line-height: 30px;
+  }
+
+  .nav-inner a:hover {
+    color: #007BFF; /* 호버 시 색상 */
+    text-decoration: underline; /* 호버 시 밑줄 */
+  }
+
   .icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-  }
-}
-
-/* 태블릿 화면 (768px ~ 1024px) */
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  .container {
-    margin-top: 60px;
-  }
-  
-  .sidebar {
-    width: 280px; /* 사이드바 너비 축소 */
-  }
-  
-  .wrapper {
-    margin-left: 320px; /* 조정된 사이드바 너비에 맞춤 */
-  }
-  
-  .logo {
-    max-width: 250px;
-  }
-}
-
-/* 사파리 브라우저 특별 대응 */
-@supports (-webkit-appearance: none) {
-  .logo img {
-    -webkit-transform: translateZ(0); /* 하드웨어 가속 */
-    transform: translateZ(0);
-  }
-  
-  .container {
-    -webkit-overflow-scrolling: touch; /* 사파리 스크롤 최적화 */
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5em;
+    background-size: 100% 100%;
   }
 }
