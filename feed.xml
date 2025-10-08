@@ -8,11 +8,21 @@
     
       
         <item>
+          <title>Understanding Apache Iceberg (4-1) - Lifecycle of Write Queries</title>
+          <pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate>
+          <link></link>
+          <guid isPermaLink="true"></guid>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; box-shadow: 0 0 0 1px white, 0 0 0 2px magenta; padding: 20px 30px; border: 1px solid red;</category>
+        </item>
+      
+    
+      
+        <item>
           <title>[사이드프로젝트] MCP로 AI에 내 헬스 데이터 연결하기! (기획 &amp; 간단 설계)</title>
           <pubDate>Mon, 11 Aug 2025 15:00:00 +0000</pubDate>
           <link></link>
           <guid isPermaLink="true"></guid>
-          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; box-shadow: 0 0 0 1px white, 0 0 0 2px magenta; padding: 20px 30px; border: 1px solid red;</category>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px groove yellow;</category>
         </item>
       
     
@@ -22,7 +32,7 @@
           <pubDate>Tue, 22 Jul 2025 15:00:00 +0000</pubDate>
           <link></link>
           <guid isPermaLink="true"></guid>
-          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px groove yellow;</category>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px dotted red;</category>
         </item>
       
     
@@ -32,7 +42,7 @@
           <pubDate>Mon, 21 Jul 2025 15:00:00 +0000</pubDate>
           <link></link>
           <guid isPermaLink="true"></guid>
-          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px dotted red;</category>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px outset aqua;</category>
         </item>
       
     
@@ -42,7 +52,7 @@
           <pubDate>Sun, 20 Jul 2025 15:00:00 +0000</pubDate>
           <link></link>
           <guid isPermaLink="true"></guid>
-          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px outset aqua;</category>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; box-shadow: 0 0 0 1px white, 0 0 0 2px magenta; padding: 20px 30px; border: 1px solid red;</category>
         </item>
       
     
@@ -52,7 +62,7 @@
           <pubDate>Sat, 11 Jan 2025 15:00:00 +0000</pubDate>
           <link></link>
           <guid isPermaLink="true"></guid>
-          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; box-shadow: 0 0 0 1px white, 0 0 0 2px magenta; padding: 20px 30px; border: 1px solid red;</category>
+          <category>color: inherit; display: block; margin-bottom: 10px; text-align: left; font-size: 18px; padding: 20px 30px; border: 2px groove yellow;</category>
         </item>
       
     
