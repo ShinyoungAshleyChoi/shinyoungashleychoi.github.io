@@ -1,0 +1,184 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Developer's Delight</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="shortcut icon" href="/img/favicon.png">
+</head>
+<body>
+
+<!-- 블로그 제목을 항상 보이게 고정 -->
+<header class="site-header">
+    <h1 class="site-title">
+        Developer's Delight
+    </h1>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+    <a href="/" class="logo">
+        <img src="/img/favicon.png">
+    </a>
+    <ul class="nav">
+        <div class="nav-inner">
+            <li><a href="/about/"><span class="icon info"></span>about</a></li>
+            <li><a href="/search/"><span class="icon doc"></span>search</a></li>
+            <li><a href="/tags/"><span class="icon code"></span>tags</a></li>
+            <li><a href="http://github.com/shinyoungashleychoi"><span class="icon github"></span>github</a></li>
+        </div>
+
+    </ul>
+</div>
+    <div class="wrapper">
+        <div class="post">
+  <h1 class="post-title">Understanding Apache Iceberg (4-2) - Lifecycle of Read Queries</h1>
+  <div class="post-meta">
+    <p>Posted on October 09, 2025</p>
+  </div>
+  <div class="post-body">
+    <p>지난 포스트에 이어 이번에는 읽기 쿼리 과정을 살펴보자.</p>
+
+<h1 id="읽기-쿼리">읽기 쿼리</h1>
+<h2 id="시나리오1-select-쿼리">시나리오1: select 쿼리</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">orders</span>
+<span class="k">WHERE</span> <span class="n">order_ts</span> <span class="k">BETWEEN</span> <span class="s1">'2023-01-01'</span> <span class="k">AND</span> <span class="s1">'2023-01-31'</span>
+</code></pre></div></div>
+
+<ol>
+  <li>엔진에 쿼리 보내기
+    <ul>
+      <li>쿼리 엔진이 메타데이터 파일들을 기반으로 실행 계획을 세울 준비를 한다.</li>
+    </ul>
+  </li>
+  <li>카탈로그 확인
+    <ul>
+      <li>쿼리 엔진은 카탈로그에 orders 테이블의 현재 메타데이터 파일 경로를 요청하고 이를 읽는다.</li>
+      <li>쓰기 쿼리 수행 시와 마찬가지로 /orders/metadata/version-hint.txt (하둡 카탈로그 기준) 파일에서 3을 확인할 수 있다. (이전 포스트의 merge 쿼리 까지 실행한 상황)</li>
+      <li>이 정보를 바탕으로 엔진은 현재 메타데이터의 위치가 /orders/metadata/v3.metadata.json임을 알게 된다.</li>
+    </ul>
+  </li>
+  <li>메타데이터 파일에서 정보 얻기
+    <ul>
+      <li>엔진은 해당 메타데이터 파일을 열어보고 아래와 같은 여러 정보를 얻는다.</li>
+      <li>테이블 스키마: 데이터를 읽기 위한 내부 메모리 구조를 준비하기 위해 사용</li>
+      <li>파티셔닝 전략: 데이터가 어떻게 정리되어 있는지 파악하기 위해 필요 - 불필요한 데이터 파일을 읽지 않을 수 있다.</li>
+      <li>현재 스냅샷 id(current-snapshot-id): 엔진은 스냅샷 어레이를 바탕으로 해당 스냡샷의 메니페스트 리스트의 경로 찾아내고, 그 경로를 따라가면서 관련된 파일들을 탐색하고 스캔한다.</li>
+    </ul>
+  </li>
+  <li>매니페스트 리스트에서 정보 얻기
+    <ul>
+      <li>메타데이터 파일에서 매니페스트 리스트의 위치를 알고 나면 해당 매니페스트 리스트 파일을 읽고 더 많은 정보를 얻어 낸다.</li>
+      <li>해당 매니페스트 리스트 내의 각 스냡샷이 참조하는 매니페스트 파일의 위치: 이를 토대로 특정 쿼리에 관련된 데이터 파일을 읽을 수 있다.</li>
+      <li>파티션 관련 정보: partition-spec-id (특정 스냡샷에 사용된 파티션 전략), 파티션 단위 통계(파일 프루닝에 사용)</li>
+      <li>추가/삭제된 데이터 파일 개 수, 각 스냅샷 별 추가/삭제된 로우 개 수 등</li>
+    </ul>
+  </li>
+  <li>매니페스트 파일에서 정보 얻기
+    <ul>
+      <li>이제 매니페스트 파일의 경로를 알고 있으니 프루닝 되지 않은 매니페스트 파일을 확인한다. 엔진은 메니페스트 파일에 기록된 각 엔트리를 스캔하는데 이는 매니페스트 파일이 추적하는 데이터 파일을 나타낸다.</li>
+      <li>쿼리 엔진은 각 데이터 파일이 속한 파티션 값을 우리 쿼리에 사용된 필터와 비교한다.</li>
+      <li>쿼리 조건은 <code class="language-plaintext highlighter-rouge">WHERE order_ts BETWEEN '2023-01-01' AND '2023-01-31'</code> 이었으므로 엔진은 2023-03-07-08과 같은 파티션 값은 무시한다. 필터값이 파티션 값과 일치하는 경우 해당 파티션의 모든 레코드를 확인한다.</li>
+      <li>파티셥 값을 기반으로 엔진은 해당 데이터 파일을 찾고 불필요한 파일을 스캔하지 않기 위해 다른 통계정보들도 모은다.</li>
+      <li>파티셔닝과 통계 기반 필터링(최대/최솟값등) 과 같은 데이터 및 파일 최적화 기술은 전체 테이블을 스캔하지 않음으로서 획기적인 성능을 보장해준다.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="시나리오2-타임-트래블-쿼리">시나리오2: 타임 트래블 쿼리</h2>
+
+<p>2편에서 공부했듯이.. 아이스버그의 강력한 무기 중 하나는 특정 스냡샷에 접근 할 수 있다는 것이다. 이를 통해 지난 분기의 데이터를 분석하거나 실수로 삭제된 행들을 복구할 수 있고 분석 결과를 재현할 수 있다.<br />
+여기서는 4-1의 merge 쿼리를 실행하기 이전 상태를 복구할 필요가 있다고 가정해보자.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">catalog</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">orders</span><span class="p">.</span><span class="n">history</span><span class="p">;</span>
+</code></pre></div></div>
+<p>위 쿼리를 실행하면 해당 테이블의 현재까지의 모든 트랜잭션 리스트를 확인할 수 있다.<br />
+해당 결과를 바탕으로 merge 쿼리 이전 상태를 반환하기 위해 아래와 같은 쿼리를 사용할 수 있다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>made_current_id</th>
+      <th>snapshot_id</th>
+      <th>parent_id</th>
+      <th>is_current_ancestor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2023-03-06 21:28:35.360</td>
+      <td>7327164675870333694</td>
+      <td>null</td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td>2023-03-07 20:45:08.914</td>
+      <td>8333017788700497002</td>
+      <td>7327164675870333694</td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+      <td>…</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span>
+<span class="nb">TIMESTAMP</span> <span class="k">AS</span> <span class="k">OF</span> <span class="s1">'2023-03-07 20:45:08.914'</span> <span class="c1">--made_current_at 기준</span>
+         
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">orders</span>
+<span class="k">VERSION</span> <span class="k">AS</span> <span class="k">OF</span> <span class="mi">8333017788700497002</span> <span class="c1">-- snapshot_id 기준</span>
+</code></pre></div></div>
+
+<p>위 쿼리를 사용하면 2023-03-07의 상태인 merge 쿼리 이전의 상태에 접근할 수 있다.</p>
+
+<ol>
+  <li>엔진에 쿼리 보내기</li>
+  <li>카탈로그 확인하기
+    <ul>
+      <li>카탈로그에 현재 메타데이터 파일의 위치를 조회하고 이를 읽는다.</li>
+      <li>/orderes/metadata/version-hint.txt 파일에서 숫자 3을 확인하고 /orders/metadata/v3.metadata.json 파일을 확인한다. 이를 통해 파티션 전략과 테이블 스키마 정보를 확인한다.</li>
+    </ul>
+  </li>
+  <li>메타데이터 파일에서 정보 얻기
+    <ul>
+      <li>현재 메타데이터 파일은 우리 아이스버그 테이블에서 생성된 모든 스냡샷을 추적하고 있다. (의도적으로 만료시킨 스냡샷이 아니라면!)</li>
+      <li>해당 스냡샷 리스트에서 엔진은 타임트래블 쿼리에서 특정된 스냡샷을 확인할 수 있다.</li>
+      <li>해당 스냡샷을 확인했으니 해당 특 스냅샷이 추적하는 매니페스트 리스트 경로를 알 수 있다.</li>
+    </ul>
+  </li>
+  <li>매니페스트 리스트에서 정보 얻기
+    <ul>
+      <li>해당 매니페스트 리스트가 포함하는 매니페스트 파일들의 위치</li>
+      <li>추가/삭제된 데이터 파일 개 수</li>
+      <li>파티션 통계 정보</li>
+    </ul>
+  </li>
+  <li>매니페스트 파일에서 정보 얻기
+    <ul>
+      <li>데이터 파일 경로</li>
+      <li>각 컬럼들의 통계 정보</li>
+    </ul>
+  </li>
+  <li>데이터 파일 읽기
+    <ul>
+      <li>해당 데이터 파일을 읽는다.</li>
+    </ul>
+  </li>
+</ol>
+
+  </div>
+  <div class="post-end-block"></div>
+</div>
+    </div>
+</div>
+
+<script src="/search.js"></script>
+
+</body>
+</html>
