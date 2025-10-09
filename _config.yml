@@ -5,7 +5,7 @@ exclude: ['.git']
 title: "Developer's Delight"
 description: "Shinyoung Choi with all the data in the world"
 url: https://shinyoungashleychoi.github.io
-paginate: 5
+paginate: 7
 paginate_path: "/page:num/"
 safe: false
 plugins:
