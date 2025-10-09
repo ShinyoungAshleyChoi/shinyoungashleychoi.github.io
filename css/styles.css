@@ -211,6 +211,76 @@ a {
   margin-bottom: 10px;
 }
 
+/* 표 스타일링 */
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.95em;
+}
+
+.post-body table th,
+.post-body table td {
+  border: 1px solid #d0d0d0; /* 연한 회색 선 */
+  padding: 7px 9px;
+  text-align: left;
+}
+
+.post-body table th {
+  background-color: #f5f5f5; /* 헤더 배경색 */
+  font-weight: bold;
+}
+
+.post-body table tr:nth-child(even) {
+  background-color: #fafafa; /* 짝수 행 배경색 */
+}
+
+.post-body table tr:hover {
+  background-color: #f0f0f0; /* 호버 효과 */
+}
+
+/* 인라인 코드 스타일링 */
+.post-body code {
+  background-color: #2d2d2d; /* 짙은 회색 배경 */
+  color: #f8f8f2; /* 밝은 텍스트 색상 */
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+}
+
+/* 코드 블록 스타일링 */
+.post-body pre {
+  background-color: #2d2d2d; /* 짙은 회색 배경 */
+  color: #f8f8f2; /* 밝은 텍스트 색상 */
+  padding: 25px 30px; /* 충분한 내부 여백: 상하 25px, 좌우 30px */
+  border-radius: 5px;
+  overflow-x: auto; /* 가로 스크롤 */
+  margin: 20px 0;
+  line-height: 1.5em; /* 줄 간격도 약간 증가 */
+}
+
+.post-body pre code {
+  background-color: transparent; /* pre 안의 code는 배경색 제거 */
+  padding: 0; /* pre 안의 code는 패딩 제거 */
+  font-size: 0.95em;
+  color: inherit;
+}
+
+/* 코드 블록 내 syntax highlighting을 위한 추가 스타일 (선택사항) */
+.post-body .highlight {
+  background-color: #2d2d2d;
+  border-radius: 5px;
+  margin: 20px 0;
+  padding: 0;
+}
+
+.post-body .highlight pre {
+  margin: 0;
+  background-color: transparent;
+  padding: 25px 30px; /* highlight 내부 pre에도 동일한 패딩 적용 */
+}
+
 .post-body a:nth-of-type(4n) {
   color: red;
 }
