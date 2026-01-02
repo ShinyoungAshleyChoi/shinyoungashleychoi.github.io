@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2025년 회고
+title: ⭐️️⭐️️2025년 회고⭐️️⭐️️
 tags: ["retrospection"]
 ---
 
