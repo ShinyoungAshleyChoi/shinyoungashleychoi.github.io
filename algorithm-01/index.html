@@ -1,0 +1,284 @@
+<h3 id="목표">목표</h3>
+
+<aside>
+💡
+
+이번 주 스터디 목표를 정리합니다.
+
+</aside>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />재귀함수</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />순열과 조합</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />정렬 알고리즘</li>
+</ul>
+
+<h3 id="알게된-내용-정리">알게된 내용 정리</h3>
+
+<aside>
+💡
+
+스터디 중 알게된 내용을 이론, 문법 중심으로 정리합니다.
+
+</aside>
+
+<ul>
+  <li>재귀 함수
+    <ul>
+      <li>자기 자신을 호출하는 함수</li>
+      <li>Base Case: 재귀 함수를 종료하는 부분
+        <ul>
+          <li>Base Case가 없다면 무한 뤂에 빠질 수 있다</li>
+          <li>Recursive Case의 마지막 부분이라고 생각하면 쉽게 작성 가능하다.</li>
+        </ul>
+      </li>
+      <li>Recursive Case: 자기 자신을 호출 하는 부분</li>
+    </ul>
+  </li>
+  <li>조합과 순열
+    <ul>
+      <li>조합(Combination): 순서 X</li>
+      <li>순열(Permutation):  순서 O</li>
+      <li>조합과 순열의 관계: nCr에 의 모든 경우에 대해 나열(순서)하면 된다</li>
+      <li>재귀로 구현 가능</li>
+    </ul>
+  </li>
+  <li>정렬 알고리즘
+    <ul>
+      <li>브루트포스: 모든 경우 살펴보기</li>
+      <li>그리디: 매순간 최선의 선택</li>
+      <li>DP: 복잡한 문제를 여러개의 문제로 나눔</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="문제-풀이">문제 풀이</h3>
+
+<aside>
+💡
+
+문제 풀이를 정리합니다.
+
+</aside>
+
+<ul>
+  <li>문제1 -  BOJ107
+    <ul>
+      <li><strong>유형: #재귀 #피보나치</strong></li>
+      <li><strong>난이도(선택):</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>O(n^2)</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어:</strong> 문제에 다 나와있지만 와닿지 않아서 숫자를 다 대입해봄</li>
+          <li>
+            <p><strong>사고 과정</strong></p>
+
+            <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  1. 대입
+  	n == 0: 0,
+  	n == 1: 1
+  	n == 2: 0+1
+  	n == 3: 1+1 (2)
+  	n == 4: 1+2 (3)
+  	n == 5: 2+3 (5)
+  	n == 6: 5+3 (8) == f(5) + f(4) == (f(4)+f(3)) + (f(3)+f(2))
+  		== ((f(3)+f(2))+(f(2)+f(1))+(f(2)+f(1))+f(1)+f(0)
+  		== .....
+  		==
+
+  2. 규칙 발견
+  	F(n) = F(n-1) + F(n-2)
+  3. Base Case
+  	n==0, n==1
+</code></pre></div>            </div>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong></li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  	<span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+  		<span class="k">return</span> <span class="n">n</span>
+  	<span class="k">return</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p><strong>회고: 메모이제이션을 사용하면 시간복잡도를 줄일 수 있다.</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  	<span class="k">global</span> <span class="n">lst</span>
+
+  	<span class="k">if</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+  		<span class="k">return</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+  	<span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+  	<span class="k">return</span> <span class="n">lst</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+  <span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">lst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">lst</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+  <span class="nf">print</span><span class="p">(</span><span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+  <span class="c1"># O(n)
+</span></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>문제2 - BOJ6603 (https://www.acmicpc.net/problem/6603)
+    <ul>
+      <li><strong>유형:</strong> #조합 #재귀</li>
+      <li><strong>난이도(선택):</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>최악의 경우 13C6 → O(n)</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어:</strong> kC6, 재귀를 활용</li>
+          <li><strong>사고 과정:</strong>
+            <ul>
+              <li>Base Case: level == r</li>
+              <li>Recursive Case: 하나씩 뽑기 반복</li>
+            </ul>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong></li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+  	<span class="k">global</span> <span class="n">choose</span><span class="p">,</span> <span class="n">lst</span><span class="p">,</span> <span class="n">k</span>
+
+  	<span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+  		<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">choose</span><span class="p">:</span>
+  			<span class="nf">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">)</span>
+  		<span class="nf">print</span><span class="p">()</span>
+  		<span class="k">return</span>
+
+  	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+  		<span class="n">choose</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  		<span class="nf">solution</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+  		<span class="n">choose</span><span class="p">.</span><span class="nf">pop</span><span class="p">()</span>
+
+  <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  	<span class="n">choose</span> <span class="o">=</span> <span class="p">[]</span>
+  	<span class="n">I</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span>
+
+  	<span class="n">k</span> <span class="o">=</span> <span class="n">I</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  	<span class="n">lst</span> <span class="o">=</span> <span class="n">I</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+  	<span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+  		<span class="k">break</span>
+
+  	<span class="nf">solution</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+  	<span class="nf">print</span><span class="p">()</span>
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고:</strong></li>
+    </ul>
+  </li>
+  <li>문제3 - BOJ10974
+    <ul>
+      <li><strong>유형:</strong> #순열 #재귀</li>
+      <li><strong>난이도(선택):</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>O(NlogN)</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어:</strong> 재귀를 활용</li>
+          <li><strong>사고 과정:</strong>
+            <ul>
+              <li>Base Case: N개를 고르는 경우</li>
+              <li>Recursive Case:</li>
+            </ul>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong></li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
+      <span class="k">global</span> <span class="n">N</span><span class="p">,</span> <span class="n">choose</span><span class="p">,</span> <span class="n">check</span>
+
+      <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="n">N</span><span class="p">:</span>
+          <span class="nf">print</span><span class="p">(</span><span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">choose</span><span class="p">)))</span>
+          <span class="k">return</span>
+
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+          <span class="k">if</span> <span class="n">check</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">:</span>
+              <span class="k">continue</span>
+
+          <span class="n">choose</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+          <span class="n">check</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+
+          <span class="nf">solution</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+          <span class="n">check</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+          <span class="n">choose</span><span class="p">.</span><span class="nf">pop</span><span class="p">()</span>
+
+  <span class="n">N</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+  <span class="n">choose</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">check</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+  <span class="nf">solution</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고:</strong></li>
+    </ul>
+  </li>
+  <li>문제4 - BOJ11650
+    <ul>
+      <li><strong>유형:</strong> #정렬</li>
+      <li><strong>난이도(선택):</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>1 ≤ N ≤ 100 → NlogN &lt; 1억</li>
+          <li>O(NlogN)</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어: 정렬</strong></li>
+          <li><strong>사고 과정:</strong>
+            <ol>
+              <li>곱한 순으로 정렬 → 더한 순으로 정렬</li>
+            </ol>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong></li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="no">N</span> <span class="o">=</span> <span class="kt">int</span><span class="o">(</span><span class="n">input</span><span class="o">())</span>
+
+  <span class="n">ranks</span> <span class="o">=</span> <span class="o">[</span><span class="n">list</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="kt">int</span><span class="o">,</span> <span class="n">input</span><span class="o">().</span><span class="na">split</span><span class="o">()))</span><span class="k">for</span> <span class="n">_</span> <span class="n">in</span> <span class="nf">range</span><span class="o">(</span><span class="no">N</span><span class="o">)]</span>
+  <span class="n">ranks</span> <span class="o">=</span> <span class="n">sorted</span><span class="o">(</span>
+  	<span class="n">ranks</span><span class="o">,</span>
+  	<span class="n">key</span><span class="o">=</span><span class="n">lambda</span> <span class="nl">x:</span> <span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]*</span><span class="n">x</span><span class="o">[</span><span class="mi">2</span><span class="o">]*</span><span class="n">x</span><span class="o">[</span><span class="mi">3</span><span class="o">],</span> <span class="n">x</span><span class="o">[</span><span class="mi">1</span><span class="o">]+</span><span class="n">x</span><span class="o">[</span><span class="mi">2</span><span class="o">]+</span><span class="n">x</span><span class="o">[</span><span class="mi">3</span><span class="o">],</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">])</span>
+  <span class="o">)</span>
+
+  <span class="k">for</span> <span class="n">rank</span> <span class="n">in</span> <span class="n">ranks</span><span class="o">[:</span><span class="mi">3</span><span class="o">]:</span>
+  	<span class="n">print</span><span class="o">(</span><span class="n">rank</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="n">end</span><span class="o">=</span><span class="sc">' '</span><span class="o">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고:</strong> 입출력 형식 맞추는 것이 킹받는다</li>
+    </ul>
+  </li>
+</ul>
