@@ -1,0 +1,421 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Developer's Delight</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="shortcut icon" href="/img/favicon.png">
+</head>
+<body>
+
+<!-- 블로그 제목을 항상 보이게 고정 -->
+<header class="site-header">
+    <h1 class="site-title">
+        Developer's Delight
+    </h1>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+    <a href="/" class="logo">
+        <img src="/img/favicon.png">
+    </a>
+    <ul class="nav">
+        <div class="nav-inner">
+            <li><a href="/about/"><span class="icon info"></span>about</a></li>
+            <li><a href="/search/"><span class="icon doc"></span>search</a></li>
+            <li><a href="/tags/"><span class="icon code"></span>tags</a></li>
+            <li><a href="http://github.com/shinyoungashleychoi"><span class="icon github"></span>github</a></li>
+        </div>
+
+    </ul>
+</div>
+    <div class="wrapper">
+        <div class="post">
+  <h1 class="post-title">[알고리즘] 브루트포스, 그리디, 다이나믹 프로그래밍</h1>
+  <div class="post-meta">
+    <p>Posted on February 11, 2026</p>
+  </div>
+  <div class="post-body">
+    <h3 id="목표">목표</h3>
+
+<aside>
+💡
+
+이번 주 스터디 목표를 정리합니다.
+
+</aside>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />브루트 포스 알고리즘</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />그리디 알고리즘</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />다이내믹 프로그래밍(DP) 알고리즘</li>
+</ul>
+
+<h3 id="알게된-내용-정리">알게된 내용 정리</h3>
+
+<aside>
+💡
+
+스터디 중 알게된 내용을 이론, 문법 중심으로 정리합니다.
+
+</aside>
+
+<ul>
+  <li>이론 정리
+    <ul>
+      <li>브루트 포스 알고리즘
+        <ul>
+          <li>모든 경우를 살펴 봄으로써 답을 구하는 알고리즘</li>
+          <li>수행 시간이 오래 걸리므로 시간 제한을 고려하여 선택하여야 함
+            <ul>
+              <li>소수 판별 문제
+                <ul>
+                  <li>브루트 포스 사용시 O(N^2) or O(NlogN)</li>
+                  <li>에라토스테네스의 체 사용시 O(N log(logN))</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>그리디 알고리즘
+        <ul>
+          <li>매 순간에서 가장 최선인 선택을 하여 답을 구함</li>
+          <li>매 순간에서의 최선의 선택 == 문제에서의 최적해 인 경우에 사용 가능</li>
+          <li>정렬 후 위 조건을 만족하는 경우가 있으므로 정렬과 함께 사용되는 경우가 많음</li>
+        </ul>
+      </li>
+      <li>DP 알고리즘 - 실제로 “다이나믹”과는 연관이 없음
+        <ul>
+          <li>복잡한 문제를 간단한 여러 개의 문제로 나누어 푸는 기법</li>
+          <li>메모이제이션을 활용하여 중복된 계산을 줄임 → DP table에 저장</li>
+          <li>DP 알고리즘 구현 방법
+            <ol>
+              <li>문제의 재귀적인 구조 파악</li>
+              <li>수식으로 표현</li>
+              <li>초기값 처리</li>
+            </ol>
+          </li>
+          <li>Top down 방식과 Bottom up 방식
+            <ul>
+              <li>Top down: 큰 부분(문제에서 구하고자 하는 값)을 기준으로 필요한 부분만 구하는 방식</li>
+              <li>Bottom up
+                <ul>
+                  <li>작은 부분부터 완성하는 방식, 보통 반복문을 이용</li>
+                  <li>전체를 구해야할 때 유용</li>
+                  <li>DP 테이블을 갱신하는 과정에서 순서에 유의. 아직 갱신하지 않은 값을 참조할 수 없음</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>문법 정리</li>
+</ul>
+
+<h3 id="문제-풀이">문제 풀이</h3>
+
+<aside>
+💡
+
+문제 풀이를 정리합니다.
+
+</aside>
+
+<ul>
+  <li>BOJ2503 (https://www.acmicpc.net/submit/2503)
+    <ul>
+      <li><strong>유형:</strong> #브루트포스 #조합</li>
+      <li><strong>난이도(선택):</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>O(9P3 * N) → O(N)</li>
+          <li>시간복잡도 근거: 1~9 중에 3가지를 뽑는 조합의 개수만큼 반복하면서 정답인지 아닌지 확인해보면 됨</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어:</strong> 시간복잡도가 O(N)이고 제약 조건이 111 ≤ N ≤ 999 이므로 모든 경우의 수를 확인하는 브루트 포스를 사용해볼만함</li>
+          <li><strong>사고 과정:</strong>
+            <ol>
+              <li>1~9중에 3가지를 뽑는 조합을 다 뽑는다</li>
+              <li>문제 조건에 맞는지 확인해서 정답일 가능성을 체크한다.</li>
+            </ol>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong>
+        <ol>
+          <li>입력 받기</li>
+          <li>조합 나열하여 for문 돌리기</li>
+          <li>문제 조건에 맞는지 확인하기</li>
+          <li>문제 조건에 맞지 않으면 넘어가고 맞으면 정답 개수를 추가시키기</li>
+        </ol>
+      </li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="n">itertools</span> <span class="kn">import</span> <span class="n">permutations</span>
+        
+  <span class="n">N</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+  <span class="n">condition</span> <span class="o">=</span> <span class="p">[</span><span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+        
+  <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nf">permutations</span><span class="p">(</span><span class="nf">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
+  	<span class="n">ok</span> <span class="o">=</span> <span class="bp">True</span>
+        
+  	<span class="k">for</span> <span class="n">num</span><span class="p">,</span> <span class="n">st</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">condition</span><span class="p">:</span>
+        
+  		<span class="n">p_st</span> <span class="o">=</span> <span class="n">p_b</span> <span class="o">=</span> <span class="mi">0</span>
+  		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+  			<span class="k">if</span> <span class="nf">int</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+  				<span class="n">p_st</span> <span class="o">+=</span> <span class="mi">1</span>
+  			<span class="k">elif</span> <span class="nf">int</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+  				<span class="n">p_b</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+  		<span class="k">if</span> <span class="n">p_st</span> <span class="o">!=</span> <span class="nf">int</span><span class="p">(</span><span class="n">st</span><span class="p">)</span> <span class="ow">or</span> <span class="n">p_b</span> <span class="o">!=</span> <span class="nf">int</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+  			<span class="n">ok</span> <span class="o">=</span> <span class="bp">False</span>
+  			<span class="k">break</span>
+        			
+        
+  	<span class="k">if</span> <span class="n">ok</span><span class="p">:</span>
+  		<span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+  <span class="nf">print</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고:</strong> 처음에 ok를 False로 두고 조건 (p_st == int(st) and p_b == int(b))이 맞으면 ok를 True로 변경하였는데 이렇게 하면 문제 조건 중에 하나만 만족해도 정답 후보로 카운팅 됨. ok를 True로 초기화하고 한번이라도 조건에 맞지 않을 때 False로 변경하는 것이 간단하고 좋음</li>
+    </ul>
+  </li>
+  <li>BOJ5585
+    <ul>
+      <li><strong>유형:</strong> #그리디</li>
+      <li><strong>난이도(선택):</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>O(1)</li>
+          <li>시간복잡도 근거: 풀이참고</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어:</strong> 500 100 50 10 5 1 순으로 우선순위가 명확하므로 그리디한 풀이가 가능</li>
+          <li><strong>사고 과정:</strong>
+            <ol>
+              <li>받을 거스름 돈을 구하고</li>
+              <li>동전의 최 우선순위부터 거스름돈에서 나눈 몫을 과 나머지를 구함</li>
+              <li>위에서 나온 나머지를 가지고 다음 동전으로 나눔</li>
+              <li>반복 …</li>
+            </ol>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong>
+        <ol>
+          <li>입력 값 받기</li>
+          <li>받아야 할 돈은 1000 - N</li>
+          <li>동전을 우선순위대로 나열</li>
+          <li>연산</li>
+        </ol>
+      </li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">price</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+  <span class="n">change</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">-</span> <span class="n">price</span>
+        
+  <span class="n">coins</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        
+  <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span> 
+  <span class="k">for</span> <span class="n">coin</span> <span class="ow">in</span> <span class="n">coins</span><span class="p">:</span>
+  	<span class="n">cnt</span> <span class="o">+=</span> <span class="n">change</span> <span class="o">//</span> <span class="n">coin</span>
+  	<span class="n">change</span> <span class="o">%=</span> <span class="n">coin</span>
+        
+  <span class="nf">print</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고:</strong></li>
+    </ul>
+  </li>
+  <li>BOJ1149 (https://www.acmicpc.net/problem/1149)
+    <ul>
+      <li><strong>유형:</strong> #DP</li>
+      <li><strong>난이도(선택):</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>O(3N)</li>
+          <li>시간복잡도 근거: 풀이참고</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어: DP를 이용</strong></li>
+          <li><strong>사고 과정:</strong>
+            <ol>
+              <li>브루트포스를 사용하기에는 3 X 2^n-1 번 돌아야하기 때문에 어려움</li>
+              <li>그리디한 풀이를 하기에는 현재 최적의 값이 문제의 최적해가 아님</li>
+              <li>DP로 풀 수 있음</li>
+            </ol>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong>
+        <ol>
+          <li>입력 받기</li>
+          <li>DP 테이블 초기화</li>
+          <li>인덱스 2부터 전 값의 최소값을 받아와 DP 테이블 갱신</li>
+        </ol>
+      </li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">N</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+        
+  <span class="n">cost</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+  <span class="n">cost</span> <span class="o">+=</span> <span class="p">[</span><span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+        
+  <span class="n">dp</span> <span class="o">=</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> 
+  <span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+  <span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+  	<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nf">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+  	<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nf">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+  	<span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="nf">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        
+  <span class="nf">print</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">N</span><span class="p">]))</span>
+        
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고:</strong> 어려움.. 이게 레벨 1이라니..</li>
+    </ul>
+  </li>
+  <li>BOJ1182 (https://www.acmicpc.net/problem/1182)
+    <ul>
+      <li><strong>유형:</strong> #브루트포스 #조합</li>
+      <li><strong>난이도(선택):2</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li>O(2^n)</li>
+          <li>시간복잡도 근거: 부분 집합의 개수가 2^n임</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어: 브루트포스를 이용</strong></li>
+          <li><strong>사고 과정:</strong>
+            <ol>
+              <li>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>부분집합의 개수는 2^n이고 1 ≤ N ≤ 20,</td>
+                      <td>S</td>
+                      <td>≤ 1,000,000 이므로 최대 2^20 == 1000000 ≤ 1억 → 브루트포스를 이용해 풀 수 있다.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </li>
+            </ol>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong>
+        <ol>
+          <li>입력받기</li>
+          <li>모든 부분집합을 나열해 합을 구하기</li>
+          <li>S와 일치하면 break</li>
+        </ol>
+      </li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        
+  <span class="n">from</span> <span class="n">itertools</span> <span class="kn">import</span> <span class="nn">combinations</span>
+        
+  <span class="no">N</span><span class="o">,</span> <span class="no">S</span> <span class="o">=</span> <span class="n">list</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="kt">int</span><span class="o">,</span> <span class="n">input</span><span class="o">().</span><span class="na">split</span><span class="o">()))</span>
+  <span class="n">set_</span> <span class="o">=</span> <span class="n">list</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="kt">int</span><span class="o">,</span> <span class="n">input</span><span class="o">().</span><span class="na">split</span><span class="o">()))</span>
+        
+  <span class="n">answer</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="nf">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="no">N</span><span class="o">+</span><span class="mi">1</span><span class="o">):</span>
+  	<span class="k">for</span> <span class="n">c</span> <span class="n">in</span> <span class="nf">combinations</span><span class="o">(</span><span class="n">set_</span><span class="o">,</span> <span class="n">n</span><span class="o">):</span>
+  		<span class="k">if</span> <span class="no">S</span> <span class="o">==</span> <span class="n">sum</span><span class="o">(</span><span class="n">c</span><span class="o">):</span>
+  			<span class="n">answer</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+  <span class="n">print</span><span class="o">(</span><span class="n">answer</span><span class="o">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고: 처음에 크기가 0인 부분 수열까지 생각을 못함</strong></li>
+    </ul>
+  </li>
+  <li>BOJ1026 (https://www.acmicpc.net/problem/1026)
+    <ul>
+      <li><strong>유형:</strong> #그리디</li>
+      <li><strong>난이도(선택): 4</strong></li>
+      <li><strong>시간복잡도</strong>
+        <ul>
+          <li></li>
+          <li>시간복잡도 근거:</li>
+        </ul>
+      </li>
+      <li><strong>아이디어</strong>
+        <ul>
+          <li><strong>핵심 풀이 아이디어:</strong></li>
+          <li><strong>사고 과정:</strong>
+            <ol>
+              <li>브루트포스로 풀 수 있을까?</li>
+              <li>NPN → 최악의 경우 50P50 == 50! = 엄청큼.. 안됨.</li>
+              <li>큰수에 가능한 작은 수를 곱하면 됨</li>
+            </ol>
+          </li>
+          <li><strong>엣지 케이스(선택):</strong></li>
+        </ul>
+      </li>
+      <li><strong>구현 순서</strong>
+        <ol>
+          <li>입력 받기</li>
+          <li>재정렬하기 → 문제에서는 B를 재정렬하지 말라고 하지만 A를 출력하는 것이 아니라 S를 출력하는 것이므로 재정렬해도 상관 없음</li>
+          <li>반복문으로 요소들 곱해서 다</li>
+        </ol>
+      </li>
+      <li>
+        <p><strong>구현 코드</strong></p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        
+  <span class="n">N</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="nf">input</span><span class="p">())</span>
+  <span class="n">A</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span>
+  <span class="n">B</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nf">input</span><span class="p">().</span><span class="nf">split</span><span class="p">()))</span>
+        
+  <span class="n">A</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+  <span class="n">B</span> <span class="o">=</span> <span class="nf">sorted</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+  <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nf">zip</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+  	<span class="n">ans</span> <span class="o">+=</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span>
+        
+  <span class="nf">print</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+</code></pre></div>        </div>
+      </li>
+      <li><strong>회고: B를 재정렬하지 말래서 처음에 어렵게 접근함..</strong></li>
+    </ul>
+  </li>
+</ul>
+
+  </div>
+  <div class="post-end-block"></div>
+</div>
+    </div>
+</div>
+
+<script src="/search.js"></script>
+
+</body>
+</html>
