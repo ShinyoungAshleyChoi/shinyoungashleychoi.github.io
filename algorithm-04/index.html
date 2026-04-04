@@ -1,0 +1,189 @@
+<h3 id="목표">목표</h3>
+
+<aside>
+💡이번 주 스터디 목표를 정리합니다.
+
+</aside>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />그래프 순회</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />그래프 최단 경로 알고리즘</li>
+</ul>
+
+<h3 id="알게된-내용-정리">알게된 내용 정리</h3>
+
+<aside>
+💡스터디 중 알게된 내용을 이론, 문법 중심으로 정리합니다.
+
+</aside>
+
+<ul>
+  <li>이론 정리
+    <ul>
+      <li>그래프: 정점과 간선으로 이루어진 구조
+        <ul>
+          <li>인접리스트: 노드의 개수만큼 공간을 확보한 뒤, 각 노드를 기준으로 연결된 노드를 저장(빈도 90%)
+            <ul>
+              <li>어떤 노드와 연결된 노드를 가장 쉽게 접근 → 사용 빈도 가장 높음</li>
+              <li>다익스트라</li>
+            </ul>
+          </li>
+          <li>인접행렬: 노드 개수 * 노드 개수 만큼의 행렬(공간)을 만둔 후에 간선을 표현 (빈도 20%)
+            <ul>
+              <li>어떤 노드 A에서 노드 B로 가는 간선이 있는지를 빠르게 확인할 때 유용</li>
+              <li>플로이드-워셜 알고리즘</li>
+            </ul>
+          </li>
+          <li>간선리스트: 간선의 정보만(노드 2개로 표현) 표현하는 방식 (빈도 10%)
+            <ul>
+              <li>간선을 기준으로 그래프를 해석할 때 유용</li>
+              <li>그러나 노드를 찾을 때는 전체 그래프를 봐야하기 때문에 불편</li>
+              <li>벨만-포드 알고리즘</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>그래프 순회: 그래프 내의 모든 노드를 한번씩 살펴봄
+        <ul>
+          <li>DFS(깊이우선탐색)
+            <ul>
+              <li>현재 탐색 중인 노드를 기준으로 연결된 노드를 즉시 방문</li>
+              <li>재귀함수로 구현 가능</li>
+            </ul>
+
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">N</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># number of nodes
+</span>            
+  <span class="c1"># DFS function
+</span>  <span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+  	<span class="k">global</span> <span class="n">adj_list</span><span class="p">,</span> <span class="n">visited</span>
+            
+  	<span class="c1"># base case
+</span>  	<span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span> 
+  		<span class="k">return</span>
+  	<span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            
+  	<span class="nf">print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">)</span>
+            
+  	<span class="c1"># recursive case
+</span>  	<span class="k">for</span> <span class="n">adj_node</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span>
+  		<span class="nf">dfs</span><span class="p">(</span><span class="n">adj_node</span><span class="p">)</span>
+            
+  <span class="n">adj_list</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+  <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span>
+            
+  <span class="c1"># Create Adjacency List
+</span>  <span class="n">adj_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="n">adj_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="n">adj_list</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            
+  <span class="c1"># Execute Depth-First Search with start node '0'
+</span>  <span class="nf">dfs</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            
+</code></pre></div>            </div>
+          </li>
+          <li>BFS (너비우선탐색)
+            <ul>
+              <li>시작 노드를 기준으로 거리가 가까운 노드를 먼저 방문</li>
+              <li>queue 를 이용하여 구현</li>
+            </ul>
+
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+            
+  <span class="n">N</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># number of nodes
+</span>            
+  <span class="n">adj_list</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+  <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span>
+            
+  <span class="c1"># Create Adjacency List
+</span>  <span class="n">adj_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="n">adj_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> <span class="n">adj_list</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nf">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            
+  <span class="c1"># Execute Breadth-First Search with start node '0'
+</span>  <span class="n">q</span> <span class="o">=</span> <span class="nf">deque</span><span class="p">()</span>
+  <span class="n">q</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">visited</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            
+  <span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+      <span class="n">node</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="nf">popleft</span><span class="p">()</span>
+      <span class="nf">print</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="sh">'</span><span class="s"> </span><span class="sh">'</span><span class="p">)</span>
+            
+      <span class="k">for</span> <span class="n">adj_node</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span>
+          <span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">adj_node</span><span class="p">]:</span>
+              <span class="k">continue</span>
+          <span class="n">q</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">adj_node</span><span class="p">)</span>
+          <span class="n">visited</span><span class="p">[</span><span class="n">adj_node</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+             
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>그래프 최단 경로 알고리즘
+        <ul>
+          <li>가중 그래프가 아닌 경우, 경로상의 간선의 수가 적은 것 (BFS)</li>
+          <li>가중 그래프의 경우 간선의 가중치 합이 작은 것</li>
+          <li>음수 사이클인 경우 최단 거리가 정의 될 수 없다</li>
+          <li>다익스트라 알고리즘
+            <ul>
+              <li>한 노드에서 다른 모든 노드까지의 최단 경로/거리</li>
+              <li>그리디한 성질을 가짐</li>
+              <li>음수 간선이 존재하지 않을 떄만 사용할 수 있다</li>
+              <li>heap(priority queue)를 사용하여 구현 가능 (시간복잡도: O(M logN) (N: 노드의 개수, M: 간선의 개수))</li>
+            </ul>
+
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="n">queue</span> <span class="kn">import</span> <span class="n">PriorityQueue</span>
+            
+  <span class="n">INF</span> <span class="o">=</span> <span class="nf">int</span><span class="p">(</span><span class="mf">1e12</span><span class="p">)</span>
+  <span class="n">N</span> <span class="o">=</span> <span class="mi">5</span>
+            
+  <span class="n">adj_list</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+  <span class="n">dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">INF</span><span class="p">]</span> <span class="o">*</span> <span class="n">N</span>
+            
+  <span class="c1"># Create Adjacency List
+</span>  <span class="n">adj_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]);</span> <span class="n">adj_list</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]);</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+  <span class="n">adj_list</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]);</span> <span class="n">adj_list</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nf">append</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">]);</span>
+            
+  <span class="c1"># Execute Dijkstra Algorithm with standard(start) node '0'
+</span>  <span class="n">pq</span> <span class="o">=</span> <span class="nc">PriorityQueue</span><span class="p">()</span>
+  <span class="n">pq</span><span class="p">.</span><span class="nf">put</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># 거리, 노드
+</span>  <span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">pq</span><span class="p">.</span><span class="nf">empty</span><span class="p">():</span> <span class="c1"># pq.queue
+</span>      <span class="n">cur_dist</span><span class="p">,</span> <span class="n">cur_node</span> <span class="o">=</span> <span class="n">pq</span><span class="p">.</span><span class="nf">get</span><span class="p">()</span>
+            
+      <span class="k">if</span> <span class="n">cur_dist</span> <span class="o">&gt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">cur_node</span><span class="p">]:</span> <span class="c1"># 추가된 부분
+</span>          <span class="k">continue</span>
+            
+      <span class="k">for</span> <span class="n">adj_node</span><span class="p">,</span> <span class="n">adj_dist</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="p">[</span><span class="n">cur_node</span><span class="p">]:</span>
+          <span class="n">temp_dist</span> <span class="o">=</span> <span class="n">cur_dist</span> <span class="o">+</span> <span class="n">adj_dist</span>
+          <span class="k">if</span> <span class="n">temp_dist</span> <span class="o">&lt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">adj_node</span><span class="p">]:</span>
+              <span class="n">pq</span><span class="p">.</span><span class="nf">put</span><span class="p">([</span><span class="n">temp_dist</span><span class="p">,</span> <span class="n">adj_node</span><span class="p">])</span>
+              <span class="n">dist</span><span class="p">[</span><span class="n">adj_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_dist</span>
+            
+  <span class="c1"># Print result
+</span>  <span class="nf">print</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+</code></pre></div>            </div>
+          </li>
+          <li>벨만-포드 알고리즘
+            <ul>
+              <li>한노드에서 다른 모든 노드까지의 최단 경로/거리</li>
+              <li>음수 사이클이 존재 하지 않을 때 사용 가능</li>
+              <li>O(NM)</li>
+            </ul>
+          </li>
+          <li>플로이드-워셜 알고리즘
+            <ul>
+              <li>모든 노드에서 모든 노드까지의 최단 경로/거리</li>
+              <li>음수 사이클이 존재하지 않을 때 사용 가능</li>
+              <li>O(N^3)</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
