@@ -241,44 +241,203 @@ a {
 
 /* 인라인 코드 스타일링 */
 .post-body code {
-  background-color: #2d2d2d; /* 짙은 회색 배경 */
-  color: #f8f8f2; /* 밝은 텍스트 색상 */
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-family: 'Courier New', Courier, monospace;
+  background: #fff1a8;
+  color: #1f2454;
+  padding: 0.15em 0.45em;
+  border-radius: 999px;
+  border: 1px solid #1f2454;
+  box-shadow: 2px 2px 0 #ff4fd8;
+  font-family: "SFMono-Regular", "JetBrains Mono", "Fira Code", "Consolas", "Menlo", monospace;
   font-size: 0.9em;
 }
 
 /* 코드 블록 스타일링 */
 .post-body pre {
-  background-color: #2d2d2d; /* 짙은 회색 배경 */
-  color: #f8f8f2; /* 밝은 텍스트 색상 */
-  padding: 25px 30px; /* 충분한 내부 여백: 상하 25px, 좌우 30px */
-  border-radius: 5px;
-  overflow-x: auto; /* 가로 스크롤 */
+  background: linear-gradient(135deg, #050505 0%, #101010 55%, #1a1a1a 100%);
+  color: #f7f7ff;
+  padding: 25px 30px;
+  border-radius: 18px;
+  border: 3px solid #000000;
+  box-shadow: 8px 8px 0 #ff4fd8;
+  overflow-x: auto;
   margin: 20px 0;
-  line-height: 1.5em; /* 줄 간격도 약간 증가 */
+  line-height: 1.6em;
 }
 
 .post-body pre code {
-  background-color: transparent; /* pre 안의 code는 배경색 제거 */
-  padding: 0; /* pre 안의 code는 패딩 제거 */
+  background: transparent;
+  padding: 0;
+  border: 0;
+  box-shadow: none;
   font-size: 0.95em;
   color: inherit;
+  font-family: "SFMono-Regular", "JetBrains Mono", "Fira Code", "Consolas", "Menlo", monospace;
 }
 
-/* 코드 블록 내 syntax highlighting을 위한 추가 스타일 (선택사항) */
+.post-body .highlighter-rouge,
+.post-body .highlighter-rouge .highlight,
+.post-body .highlighter-rouge pre,
+.post-body .highlighter-rouge code {
+  background: transparent;
+}
+
+.post-body .highlighter-rouge pre.highlight,
+.post-body .highlighter-rouge div.highlight {
+  background: linear-gradient(135deg, #050505 0%, #101010 55%, #1a1a1a 100%);
+  border-radius: 18px;
+}
+
+.post-body .highlighter-rouge pre.highlight code,
+.post-body .highlighter-rouge pre.highlight code span {
+  background: transparent !important;
+}
+
 .post-body .highlight {
-  background-color: #2d2d2d;
-  border-radius: 5px;
+  background: transparent;
+  border-radius: 18px;
   margin: 20px 0;
   padding: 0;
 }
 
+.post-body .highlighter-rouge {
+  position: relative;
+  margin: 24px 0;
+}
+
+.post-body .highlighter-rouge .highlight {
+  margin: 0;
+}
+
 .post-body .highlight pre {
   margin: 0;
-  background-color: transparent;
-  padding: 25px 30px; /* highlight 내부 pre에도 동일한 패딩 적용 */
+  background: transparent;
+  padding: 25px 24px;
+}
+
+.post-body .highlighter-rouge .code-copy-button {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 1;
+  border: 1px solid #ff4fd8;
+  background: rgba(0, 0, 0, 0.86);
+  color: #fff1a8;
+  border-radius: 999px;
+  padding: 0.35em 0.8em;
+  font: inherit;
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.post-body .highlighter-rouge .code-copy-button:hover {
+  background: #ff4fd8;
+  color: #050505;
+  transform: translateY(-1px);
+}
+
+.post-body .highlighter-rouge .code-copy-button.is-copied {
+  background: #00e7ff;
+  border-color: #00e7ff;
+  color: #050505;
+}
+
+.post-body .highlight .c,
+.post-body .highlight .cm,
+.post-body .highlight .c1,
+.post-body .highlight .cs {
+  color: #8ea3ff;
+  font-style: italic;
+}
+
+.post-body .highlight .err,
+.post-body .highlight .gr,
+.post-body .highlight .gt {
+  color: #fff5f7;
+  background: #ff4d6d;
+}
+
+.post-body .highlight .k,
+.post-body .highlight .kc,
+.post-body .highlight .kd,
+.post-body .highlight .kn,
+.post-body .highlight .kp,
+.post-body .highlight .kr,
+.post-body .highlight .ow {
+  color: #ff8ad8;
+  font-weight: bold;
+}
+
+.post-body .highlight .kt,
+.post-body .highlight .nb,
+.post-body .highlight .bp {
+  color: #78f0ff;
+}
+
+.post-body .highlight .na,
+.post-body .highlight .nc,
+.post-body .highlight .ne,
+.post-body .highlight .nf,
+.post-body .highlight .nn,
+.post-body .highlight .nt {
+  color: #ffe56f;
+  font-weight: bold;
+}
+
+.post-body .highlight .n,
+.post-body .highlight .nv,
+.post-body .highlight .vc,
+.post-body .highlight .vg,
+.post-body .highlight .vi,
+.post-body .highlight .nx {
+  color: #f7f7ff;
+}
+
+.post-body .highlight .m,
+.post-body .highlight .mf,
+.post-body .highlight .mh,
+.post-body .highlight .mi,
+.post-body .highlight .mo,
+.post-body .highlight .il {
+  color: #91ffb2;
+}
+
+.post-body .highlight .s,
+.post-body .highlight .sb,
+.post-body .highlight .sc,
+.post-body .highlight .sd,
+.post-body .highlight .s1,
+.post-body .highlight .s2,
+.post-body .highlight .se,
+.post-body .highlight .sh,
+.post-body .highlight .si,
+.post-body .highlight .sr,
+.post-body .highlight .ss,
+.post-body .highlight .sx {
+  color: #ffb37c;
+}
+
+.post-body .highlight .o,
+.post-body .highlight .p,
+.post-body .highlight .w {
+  color: #d8defd;
+}
+
+@media (max-width: 640px) {
+  .post-body pre {
+    padding: 18px 20px;
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 #ff4fd8;
+  }
+
+  .post-body .highlight pre {
+    padding: 18px 16px;
+  }
+
+  .post-body .highlighter-rouge .code-copy-button {
+    top: 10px;
+    right: 12px;
+  }
 }
 
 .post-body a:nth-of-type(4n) {
