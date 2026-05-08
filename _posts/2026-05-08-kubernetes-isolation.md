@@ -128,13 +128,11 @@ gpu=true:NoSchedule
 실제 배치는 affinity, resource availability, scheduler 상태등을 종합해서 결정된다.
 
 
-
+---
 
 ### Kubernetes의 격리는 하나의 기능이 아니라, 여러 레이어를 조합해서 만드는 구조다.
 
 많은 사람들이 처음엔 Namespace를 만들면 환경이 완전히 분리된다고 생각하거나 NodeGroup만 나누면 멀티테넌시가 해결된다고 생각한다.
-하지만 실제 운영 환경에서는 Namespace로 논리적 경계를 만들고 RBAC으로 권한을 제한하고 ResourceQuota로 자원 사용량을 통제하고 NetworkPolicy로 통신 범위를 제한하고 Affinity/Taint로 실행 위치를 제어하면서
+하지만 실제 운영 환경에서는 Namespace로 논리적 경계를 만들고 RBAC으로 권한을 제한하고 ResourceQuota로 자원 사용량을 통제하고 NetworkPolicy로 통신 범위를 제한하고 Affinity/Taint로 실행 위치를 제어하면서 여러 기능이 함께 동작해야 원하는 수준의 격리가 만들어진다.
 
-여러 기능이 함께 동작해야 원하는 수준의 격리가 만들어진다.
-
-즉 Kubernetes에서 “분리”란 단일 기능이 아니라, 리소스 관점, 권한 관점, 네트워크 관점, 인프라 관점, 스케줄링 관점이 서로 겹쳐지는 결과에 가깝다.
+즉 Kubernetes에서 “분리”란 단일 기능이 아니라 리소스, 권한, 네트워크, 인프라, 스케줄링 관점이 서로 겹쳐지는 결과에 가깝다.
