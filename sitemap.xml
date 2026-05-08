@@ -4,6 +4,22 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://shinyoungashleychoi.github.io/kubernetes-isolation/</loc>
+        
+        <lastmod>2026-05-08T00:00:00+00:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>https://shinyoungashleychoi.github.io/algorithm-04/</loc>
         
         <lastmod>2026-04-04T00:00:00+00:00</lastmod>
