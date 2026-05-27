@@ -2,3 +2,5 @@ source "https://rubygems.org"
 
 gem "jekyll", "~> 4.0" # Jekyll 기본 설치
 gem "jekyll-paginate", "~> 1.1" # 페이징 플러그인gem "jekyll"
+gem 'jekyll-sass-converter', '~> 2.2'
+gem 'sass-embedded', '~> 1.69.5'
