@@ -3,27 +3,68 @@ layout: default
 paginate: true
 ---
 
+{% assign featured = paginator.posts | first %}
+{% if featured %}
+{% assign featured_words = featured.content | strip_html | number_of_words %}
+<section class="featured-card">
+    <span class="featured-ribbon">FEATURED</span>
+    <div class="featured-illustration" aria-hidden="true">
+        <div class="retro-monitor">
+            <div class="retro-monitor__screen">?</div>
+            <div class="retro-monitor__base"></div>
+        </div>
+        <span class="coffee">☕</span>
+        <span class="spark spark--a">✦</span>
+        <span class="spark spark--b">✧</span>
+    </div>
+    <div class="featured-copy">
+        <span class="category-pill">{{ featured.tags | first | default: "DEV LOG" | upcase }}</span>
+        <h1><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h1>
+        <p>{{ featured.excerpt | strip_html | strip_newlines | truncate: 120 }}</p>
+        <div class="post-facts">
+            <span>▦ {{ featured.date | date: "%Y-%m-%d" }}</span>
+            <span>◷ {% assign featured_minutes = featured_words | divided_by: 200 %}{% if featured_minutes < 1 %}1{% else %}{{ featured_minutes }}{% endif %} min read</span>
+            <span>◇ {{ featured.tags | join: ", " }}</span>
+        </div>
+    </div>
+    <a class="read-more" href="{{ featured.url | relative_url }}">READ MORE <span>▶</span></a>
+    <span class="window-controls card-controls" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span>
+</section>
+{% endif %}
 
-<div class="posts">
-    {% for post in paginator.posts %}
-    <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
+<section class="post-list" aria-label="글 목록">
+    {% for post in paginator.posts offset:1 %}
+    {% assign words = post.content | strip_html | number_of_words %}
+    {% assign card_index = forloop.index0 | modulo: 5 %}
+    {% case card_index %}
+        {% when 0 %}{% assign card_color = "pink" %}
+        {% when 1 %}{% assign card_color = "yellow" %}
+        {% when 2 %}{% assign card_color = "coral" %}
+        {% when 3 %}{% assign card_color = "cyan" %}
+        {% else %}{% assign card_color = "lilac" %}
+    {% endcase %}
+    <article class="post-card post-card--{{ card_color }}">
+        <span class="post-card__icon" aria-hidden="true">
+            {% case card_color %}{% when 'pink' %}♥{% when 'yellow' %}⌘{% when 'coral' %}⌁{% when 'cyan' %}⌕{% else %}&lt;/&gt;{% endcase %}
+        </span>
+        <div class="post-card__copy">
+            <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+            <p>{{ post.date | date: "%Y-%m-%d" }} <b>•</b> {{ post.tags | join: ", " }}</p>
+        </div>
+        <span class="post-card__tag">{{ post.tags | first | default: "NOTE" | upcase }}</span>
+        <span class="post-card__star" aria-hidden="true">☆</span>
+    </article>
     {% endfor %}
-</div>
+</section>
 
-<div class="pagination">
+{% if paginator.total_pages > 1 %}
+<nav class="pagination" aria-label="페이지 이동">
     {% if paginator.previous_page %}
-    <a class="prev" href="{{ paginator.previous_page_path }}">&larr; Previous</a>
+    <a href="{{ paginator.previous_page_path | relative_url }}">← Previous</a>
     {% endif %}
-
+    <span>{{ paginator.page }} / {{ paginator.total_pages }}</span>
     {% if paginator.next_page %}
-    <a class="next" href="{{ paginator.next_page_path }}">Next &rarr;</a>
+    <a href="{{ paginator.next_page_path | relative_url }}">Next →</a>
     {% endif %}
-</div>
-
-<!--<div class="posts">-->
-<!--    {% for post in site.posts %}-->
-<!--    {% if post.hidden != true %}-->
-<!--    <a href="{{ post.url }}" class="post-link">{{ post.title }}</a>-->
-<!--    {% endif %}-->
-<!--    {% endfor %}-->
-<!--</div>-->
+</nav>
+{% endif %}
