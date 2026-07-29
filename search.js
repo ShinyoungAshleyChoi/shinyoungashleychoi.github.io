@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("search-input");
     const searchResults = document.getElementById("search-results");
 
+    if (!searchInput || !searchResults) {
+        return;
+    }
+
     // Fetch the search index
     fetch("/search.json")
         .then((response) => response.json())
@@ -14,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     const filteredPosts = data.filter((post) => {
                         const contentMatch = post.content.toLowerCase().includes(query);
                         const titleMatch = post.title.toLowerCase().includes(query);
-                        const tagMatch = post.tags.some(tag => tag.toLowerCase().includes(query));
+                        const tags = Array.isArray(post.tags) ? post.tags : [];
+                        const tagMatch = tags.some(tag => tag.toLowerCase().includes(query));
                         return contentMatch || titleMatch || tagMatch;
                     });
 

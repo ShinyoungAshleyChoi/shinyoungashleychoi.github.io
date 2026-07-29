@@ -1,43 +1,140 @@
-<html lang="en">
+<!doctype html>
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Developer's Delight</title>
+    <meta name="theme-color" content="#4338a8">
+    <title>Understanding Apache Iceberg (4-1) - Lifecycle of Write Queries · Developer's Delight</title>
+    <meta name="description" content="이 글의 내용은 Apache Iceberg: The Definite Guide (O’Reily)의 내용을 정리한 것 입니다.">
+    <link rel="stylesheet" href="/css/pygments.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="shortcut icon" href="/img/favicon.png">
 </head>
-<body>
-
-<!-- 블로그 제목을 항상 보이게 고정 -->
-<header class="site-header">
-    <h1 class="site-title">
-        Developer's Delight
-    </h1>
-</header>
-
-<div class="container">
-    <div class="sidebar">
-    <a href="/" class="logo">
-        <img src="/img/favicon.png">
-    </a>
-    <ul class="nav">
-        <div class="nav-inner">
-            <li><a href="/about/"><span class="icon info"></span>about</a></li>
-            <li><a href="/search/"><span class="icon doc"></span>search</a></li>
-            <li><a href="/tags/"><span class="icon code"></span>tags</a></li>
-            <li><a href="http://github.com/shinyoungashleychoi"><span class="icon github"></span>github</a></li>
+<body class="post-page">
+    <div class="desktop-shell">
+        <div class="os-titlebar" aria-hidden="true">
+            <span class="os-titlebar__mark">✦</span>
+            <span>Developer's Delight</span>
+            <span class="window-controls"><i>_</i><i>□</i><i>×</i></span>
         </div>
 
-    </ul>
-</div>
-    <div class="wrapper">
-        <div class="post">
-  <h1 class="post-title">Understanding Apache Iceberg (4-1) - Lifecycle of Write Queries</h1>
-  <div class="post-meta">
-    <p>Posted on October 01, 2025</p>
-  </div>
-  <div class="post-body">
-    <p><em>이 글의 내용은 Apache Iceberg: The Definite Guide (O’Reily)의 내용을 정리한 것 입니다.</em></p>
+        <div class="site-grid">
+            <aside class="sidebar" id="site-sidebar">
+    <div class="brand-row">
+        <a href="/" class="brand" aria-label="Developer's Delight 홈">
+            <span>Developer’s</span>
+            <span>Delight</span>
+        </a>
+        <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar-content">
+            MENU
+        </button>
+    </div>
+
+    <div class="sidebar-content" id="sidebar-content">
+        <div class="profile-art">
+            <span class="pixel-spark pixel-spark--one">✦</span>
+            <span class="pixel-spark pixel-spark--two">✧</span>
+            <img src="/img/favicon.png" alt="노트북 앞의 개발자와 고양이 픽셀 캐릭터">
+            <span class="speech-bubble" aria-hidden="true">♥</span>
+        </div>
+
+        <div class="hello-card">
+            <span>&gt; hello_world():</span>
+            <span>Enjoy the process</span>
+            <span>Build the future <b>♥</b></span>
+        </div>
+
+        <nav class="side-nav" aria-label="주 메뉴">
+            <a href="/about/"><span>ⓘ</span> about me</a>
+            <a href="/search/"><span>⌕</span> search</a>
+            <a href="/tags/"><span>{ }</span> tags</a>
+            <a href="/archives/"><span>▣</span> archives</a>
+            <a href="https://github.com/shinyoungashleychoi"><span>◆</span> github</a>
+        </nav>
+
+        <section class="mini-window now-playing" aria-labelledby="playing-title">
+            <div class="mini-window__title">
+                <span id="playing-title">Now Playing.</span>
+                <span>_ □ ×</span>
+            </div>
+            <div class="mini-window__body">
+                <span class="music-icon">♫</span>
+                <p><strong>Focus Mode</strong><br><span>Coding Playlist</span></p>
+                <div class="player-track"><i></i></div>
+                <div class="player-controls">◀◀ &nbsp; ▶ &nbsp; ▶▶</div>
+            </div>
+        </section>
+
+        <section class="mini-window learning" aria-labelledby="learning-title">
+            <div class="mini-window__title">
+                <span id="learning-title">Currently Learning</span>
+                <span>_ □ ×</span>
+            </div>
+            <div class="mini-window__body">
+                <ul>
+                    <li>Apache Iceberg</li>
+                    <li>Data Architecture</li>
+                    <li>Kubernetes</li>
+                </ul>
+                <div class="learning-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+        </section>
+    </div>
+</aside>
+
+
+            <main class="site-main">
+                <header class="topbar">
+                    <div class="topbar__label">
+                        <span aria-hidden="true">▣</span>
+                        
+                            <a href="/">Home</a>
+                            <span class="crumb">›</span>
+                            <span>Understanding Apache Iceberg (4...</span>
+                        
+                    </div>
+                    <nav class="desktop-icons" aria-label="빠른 메뉴">
+                        <a href="/" aria-label="홈">♥</a>
+                        <a href="/tags/" aria-label="태그">★</a>
+                        <a href="/archives/" aria-label="아카이브">▰</a>
+                        <a href="/about/" aria-label="소개">▣</a>
+                        <a href="/search/" aria-label="검색">▤</a>
+                    </nav>
+                    <p class="topbar__note">welcome to my chaos playground ✧</p>
+                </header>
+
+                <div class="page-content">
+                    
+<article class="post">
+    <header class="post-hero">
+        <div class="post-hero__art" aria-hidden="true">
+            <div class="retro-monitor retro-monitor--small">
+                <div class="retro-monitor__screen">?</div>
+                <div class="retro-monitor__base"></div>
+            </div>
+            <span>☕</span>
+        </div>
+        <div class="post-hero__copy">
+            <span class="category-pill">ICEBERG</span>
+            <h1>Understanding Apache Iceberg (4-1) - Lifecycle of Write Queries</h1>
+            <p>이 글의 내용은 Apache Iceberg: The Definite Guide (O’Reily)의 내용을 정리한 것 입니다.
+</p>
+            <div class="post-facts">
+                <span>▦ 2025-10-01</span>
+                <span>◷ 4 min read</span>
+                <span>◇ iceberg, bigdata, datalake</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="article-layout">
+        <section class="retro-window article-window">
+            <div class="retro-window__titlebar">
+                <span>✧ &nbsp; article.md</span>
+                <span class="window-controls"><i>_</i><i>□</i><i>×</i></span>
+            </div>
+            <div class="post-body" id="post-body">
+                <p><em>이 글의 내용은 Apache Iceberg: The Definite Guide (O’Reily)의 내용을 정리한 것 입니다.</em></p>
 
 <p>사족을 붙이자면, 이 부분을 어떻게 정리하는게 좋을까 하다가 그냥 읽고만 넘어갔었고 기억은 자연스레 휘발되었다..
 결국 면접에서 해당 부분에 대한 질문에 대답을 못한 기념으로 아무렇게나 정리해본다…..^^</p>
@@ -283,14 +380,32 @@ WHEN NOT MATCHED THEN INSERT *
 </table>
 
 
-  </div>
-  <div class="post-end-block"></div>
-</div>
+                <div class="post-end-mark" aria-hidden="true">✦ &nbsp; ✧ &nbsp; ★ &nbsp; ✧ &nbsp; ✦</div>
+            </div>
+        </section>
+
+        <aside class="retro-window toc-window" aria-labelledby="toc-title">
+            <button class="retro-window__titlebar toc-toggle" id="toc-title" type="button" aria-expanded="true">
+                <span>ON THIS PAGE</span>
+                <span class="window-controls"><i>_</i><i>□</i><i>×</i></span>
+            </button>
+            <nav id="toc" class="toc" aria-label="이 글의 목차"></nav>
+        </aside>
     </div>
-</div>
+</article>
 
-<script src="/search.js"></script>
-<script src="/code-blocks.js"></script>
+                </div>
+            </main>
+        </div>
 
+        <footer class="site-footer">
+            <span>★ &nbsp; Thanks for visiting!</span>
+            <span>© 2026 Shinyoung.</span>
+            <span class="footer-clock" id="footer-clock">--:--</span>
+        </footer>
+    </div>
+
+    <script src="/search.js"></script>
+    <script src="/theme.js"></script>
 </body>
 </html>
