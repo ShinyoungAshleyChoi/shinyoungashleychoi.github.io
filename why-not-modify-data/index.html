@@ -1,0 +1,277 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Developer's Delight</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="shortcut icon" href="/img/favicon.png">
+</head>
+<body>
+
+<!-- 블로그 제목을 항상 보이게 고정 -->
+<header class="site-header">
+    <h1 class="site-title">
+        Developer's Delight
+    </h1>
+</header>
+
+<div class="container">
+    <div class="sidebar">
+    <a href="/" class="logo">
+        <img src="/img/favicon.png">
+    </a>
+    <ul class="nav">
+        <div class="nav-inner">
+            <li><a href="/about/"><span class="icon info"></span>about</a></li>
+            <li><a href="/search/"><span class="icon doc"></span>search</a></li>
+            <li><a href="/tags/"><span class="icon code"></span>tags</a></li>
+            <li><a href="http://github.com/shinyoungashleychoi"><span class="icon github"></span>github</a></li>
+        </div>
+
+    </ul>
+</div>
+    <div class="wrapper">
+        <div class="post">
+  <h1 class="post-title">왜 현대 시스템은 데이터를 덮어쓰지 않을까?</h1>
+  <div class="post-meta">
+    <p>Posted on July 29, 2026</p>
+  </div>
+  <div class="post-body">
+    <p><em>PostgreSQL, Kafka, Iceberg 그리고 Git이 같은 철학을 선택한 이유</em></p>
+
+<p>Iceberg는 Parquet 파일을 수정하지 않는다.<br />
+PostgreSQL은 UPDATE를 하지 않는다.<br />
+Kafka는 메시지를 삭제하지 않는다.<br />
+Git은 Commit을 수정하지 않는다.</p>
+
+<p>처음 보면 이상하게 들린다. 데이터베이스는 데이터를 수정해야 하고, 메시지 큐는 메시지를 읽으면 삭제해야 하며, 파일은 저장하면 덮어써지는 것이 당연하다고 생각하기 때문이다.</p>
+
+<p>하지만 현대의 많은 시스템은 정반대의 선택을 한다. 기존 데이터를 수정하는 대신 <strong>새로운 사실을 기록(Add/Append)</strong> 한다.</p>
+
+<p>PostgreSQL은 새로운 Row를 만들고, Kafka는 새로운 Event를 추가하며, Iceberg는 새로운 Snapshot을 생성하고, Git은 새로운 Commit을 쌓는다.</p>
+
+<p>서로 해결하는 문제도, 사용하는 분야도 다르다. 그럼에도 이들은 놀라울 정도로 같은 설계 철학을 공유한다.</p>
+
+<p><strong>“수정(Mutate)하지 말고, 기록(Append)하라.”</strong></p>
+
+<p>이 글에서는 PostgreSQL, Kafka, Iceberg, Git이 왜 모두 이 철학을 선택했는지, 그리고 이 선택이 동시성, 안정성, 복구, 그리고 시스템 설계에 어떤 영향을 주는지 살펴보려 한다.</p>
+
+<hr />
+
+<h2 id="우리는-왜-수정이-당연하다고-생각할까">우리는 왜 ‘수정’이 당연하다고 생각할까?</h2>
+
+<p>프로그래밍을 처음 배우면 ‘수정’은 너무나 자연스럽다.</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">UPDATE</span> <span class="n">users</span>
+<span class="k">SET</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="k">WHERE</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>이 SQL을 실행하면 대부분의 사람은 머릿속으로 이렇게 상상한다.</p>
+
+<blockquote>
+  <p>“기존 데이터가 30으로 바뀌었겠지.”</p>
+</blockquote>
+
+<p>텍스트 파일도 마찬가지다.</p>
+
+<p>저장(Save) 버튼을 누르면 기존 내용이 새로운 내용으로 덮어써질 것이라고 생각한다.
+메시지 큐 역시 메시지를 읽으면 큐에서 사라지는 것이 자연스럽다.
+우리에게 ‘수정’은 너무 익숙한 개념이다.
+그런데 시스템이 커질수록 이 단순한 방식은 여러 문제를 만들기 시작한다.</p>
+
+<hr />
+
+<h2 id="수정은-생각보다-위험하다">수정은 생각보다 위험하다</h2>
+
+<p>만약 두 명의 사용자가 동시에 같은 데이터를 수정한다면 어떻게 될까?</p>
+
+<p>누가 마지막에 저장했는가?</p>
+
+<p>이전 값은 무엇이었는가?</p>
+
+<p>왜 값이 변경되었는가?</p>
+
+<p>실수로 잘못 수정했다면 이전 상태로 돌아갈 수 있을까?</p>
+
+<p>읽고 있는 도중 다른 사용자가 데이터를 수정하면 내가 보고 있는 데이터는 무엇을 기준으로 해야 할까?</p>
+
+<p>메시지를 한 번 읽고 삭제해 버렸는데, 나중에 버그가 발견되면 어떻게 다시 처리할 수 있을까?</p>
+
+<p>Parquet 파일을 직접 수정하는 도중 작업이 실패하면 파일은 어떤 상태가 될까?</p>
+
+<p>Git에서 과거 Commit이 계속 바뀐다면 협업은 가능할까?</p>
+
+<p>결국 문제는 하나다.</p>
+
+<p><strong>기존 상태를 덮어쓰는 순간, 과거는 사라진다.</strong></p>
+
+<p>그리고 시스템은 과거를 잃는 순간부터 복잡해지기 시작한다.</p>
+
+<hr />
+
+<h2 id="그래서-현대-시스템은-다른-선택을-했다">그래서 현대 시스템은 다른 선택을 했다</h2>
+
+<p>흥미롭게도 서로 전혀 다른 분야의 시스템들은 같은 결론에 도달했다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>시스템</th>
+      <th>기존 방식</th>
+      <th>실제 선택</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PostgreSQL</td>
+      <td>Row 수정</td>
+      <td>새로운 Row 생성</td>
+    </tr>
+    <tr>
+      <td>Kafka</td>
+      <td>메시지 삭제</td>
+      <td>새로운 Event 추가</td>
+    </tr>
+    <tr>
+      <td>Iceberg</td>
+      <td>파일 수정</td>
+      <td>새로운 Snapshot 생성</td>
+    </tr>
+    <tr>
+      <td>Git</td>
+      <td>Commit 수정</td>
+      <td>새로운 Commit 생성</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>이들은 모두 기존 데이터를 수정하지 않는다.</p>
+
+<p>대신 <strong>새로운 상태를 추가(Append)</strong> 한다.</p>
+
+<p>과거는 그대로 남겨 두고, 현재는 새로운 기록으로 표현한다.</p>
+
+<hr />
+
+<h2 id="postgresql은-update를-하지-않는다">PostgreSQL은 UPDATE를 하지 않는다</h2>
+
+<p>PostgreSQL에서 UPDATE를 실행하면 실제로는 기존 Row를 덮어쓰지 않는다.</p>
+
+<p>기존 Row는 그대로 남겨 두고 새로운 Row를 생성한 뒤, 이전 Row는 더 이상 사용되지 않는 상태(dead tuple)로 표시한다.</p>
+
+<p>처음에는 꽤 비효율적으로 보인다.</p>
+
+<p>‘그냥 값을 바꾸면 되는데 왜 굳이 새로운 Row를 만들지?’</p>
+
+<p>하지만 이 방식 덕분에 PostgreSQL은 별도의 Lock을 최소화하면서도 여러 사용자가 동시에 같은 테이블을 읽고 쓸 수 있다.</p>
+
+<p>바로 MVCC(Multi-Version Concurrency Control)다.</p>
+
+<p>그리고 더 이상 필요 없는 이전 Row는 나중에 VACUUM이 정리한다.</p>
+
+<p>즉, <strong>수정하지 않고 기록한 뒤, 나중에 정리한다.</strong></p>
+
+<hr />
+
+<h2 id="kafka는-메시지를-삭제하지-않는다">Kafka는 메시지를 삭제하지 않는다</h2>
+
+<p>전통적인 메시지 큐는 메시지를 읽으면 삭제한다.</p>
+
+<p>하지만 Kafka는 다르다.</p>
+
+<p>Kafka는 메시지를 읽어도 삭제하지 않는다.</p>
+
+<p>Consumer는 단지 “나는 여기까지 읽었다”라는 Offset만 기록한다.</p>
+
+<p>덕분에 Consumer는 언제든지 과거 Event를 다시 읽을 수 있다.</p>
+
+<p>버그가 발생하면 처음부터 다시 처리(Replay)할 수 있고, 새로운 Consumer를 추가해도 기존 Event를 그대로 활용할 수 있다.</p>
+
+<p>Kafka가 관리하는 것은 “누가 읽었는가”가 아니라 “무슨 일이 발생했는가”이다.</p>
+
+<hr />
+
+<h2 id="iceberg는-parquet-파일을-수정하지-않는다">Iceberg는 Parquet 파일을 수정하지 않는다</h2>
+
+<p>수십 GB의 Parquet 파일을 직접 수정하는 것은 매우 위험하다.</p>
+
+<p>작업 도중 실패하면 파일이 손상될 수도 있고, 여러 사용자가 동시에 접근하는 환경에서는 일관성을 유지하기도 어렵다.</p>
+
+<p>그래서 Iceberg는 기존 파일을 수정하지 않는다.</p>
+
+<p>새로운 Parquet 파일을 생성한 뒤, 새로운 Snapshot이 이 파일들을 가리키도록 메타데이터만 교체한다.</p>
+
+<p>덕분에 특정 시점의 데이터로 되돌아가는 Time Travel도 가능해진다.</p>
+
+<p>기존 파일은 나중에 Snapshot Expiration이나 Compaction 과정에서 정리된다.</p>
+
+<hr />
+
+<h2 id="git도-마찬가지다">Git도 마찬가지다</h2>
+
+<p>많은 개발자가 매일 Git을 사용하지만, Git 역시 같은 철학을 따른다는 사실은 의외로 잘 의식하지 않는다.</p>
+
+<p>Git에서 Commit은 수정되지 않는다.</p>
+
+<p>새로운 작업을 하면 새로운 Commit이 만들어지고, Branch 역시 Commit을 가리키는 포인터만 이동한다.</p>
+
+<p>그래서 언제든 과거 Commit으로 돌아갈 수 있고, Branch를 만들어 다른 방향으로 작업을 이어 갈 수도 있다.</p>
+
+<p>Git은 파일의 현재 상태보다 <strong>변화의 역사</strong>를 더 중요하게 생각한다.</p>
+
+<hr />
+
+<h2 id="결국-모두-같은-문제를-해결하고-있었다">결국 모두 같은 문제를 해결하고 있었다</h2>
+
+<p>지금까지 살펴본 네 시스템은 서로 해결하는 문제가 다르다.</p>
+
+<p>PostgreSQL은 데이터베이스다.</p>
+
+<p>Kafka는 메시지 브로커다.</p>
+
+<p>Iceberg는 데이터 레이크 포맷이다.</p>
+
+<p>Git은 버전 관리 시스템이다.</p>
+
+<p>하지만 이들은 모두 하나의 질문 앞에서 같은 답을 선택했다.</p>
+
+<blockquote>
+  <p><strong>“기존 상태를 덮어쓰는 것이 정말 최선일까?”</strong></p>
+</blockquote>
+
+<p>그리고 모두 같은 결론에 도달했다.</p>
+
+<p><strong>수정하지 말고, 새로운 사실을 기록하자.</strong></p>
+
+<p>이 선택 하나로 동시성은 쉬워졌고, 장애 복구는 강력해졌으며, 과거를 추적할 수 있게 되었고, 시스템은 더 안전해졌다.</p>
+
+<hr />
+
+<h2 id="마치며">마치며</h2>
+
+<p>예전에는 PostgreSQL의 MVCC, Kafka의 Log, Iceberg의 Snapshot, Git의 Commit을 각각 별개의 기술이라고 생각했다.</p>
+
+<p>하지만 하나씩 공부할수록 오히려 반대라는 생각이 들었다.</p>
+
+<p>이들은 서로 다른 기술이 아니라, 같은 철학을 각자의 문제에 맞게 구현한 시스템이었다.</p>
+
+<p>기술은 계속 변한다.</p>
+
+<p>하지만 좋은 설계는 반복된다.</p>
+
+<p>그리고 현대 시스템이 반복해서 선택한 설계는 의외로 단순하다.</p>
+
+<p><strong>과거를 지우지 말고, 새로운 사실을 기록하라.</strong></p>
+
+  </div>
+  <div class="post-end-block"></div>
+</div>
+    </div>
+</div>
+
+<script src="/search.js"></script>
+<script src="/code-blocks.js"></script>
+
+</body>
+</html>
