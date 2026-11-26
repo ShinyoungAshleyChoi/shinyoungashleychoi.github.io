@@ -3,158 +3,753 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#4338a8">
+    <meta name="theme-color" content="#ffffff">
     <title>Developer's Delight</title>
     <meta name="description" content="Shinyoung Choi with all the data in the world">
     <link rel="stylesheet" href="/css/pygments.css">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/stackroom.css">
     <link rel="shortcut icon" href="/img/favicon.png">
 </head>
-<body class="list-page">
-    <div class="desktop-shell">
-        <div class="os-titlebar" aria-hidden="true">
-            <span class="os-titlebar__mark">✦</span>
-            <span>Developer's Delight</span>
-            <span class="window-controls"><i>_</i><i>□</i><i>×</i></span>
-        </div>
-
-        <div class="site-grid">
-            <aside class="sidebar" id="site-sidebar">
-    <div class="brand-row">
-        <a href="/" class="brand" aria-label="Developer's Delight 홈">
-            <span>Developer’s</span>
-            <span>Delight</span>
-        </a>
-        <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="sidebar-content">
-            MENU
-        </button>
-    </div>
-
-    <div class="sidebar-content" id="sidebar-content">
-        <div class="profile-art">
-            <span class="pixel-spark pixel-spark--one">✦</span>
-            <span class="pixel-spark pixel-spark--two">✧</span>
-            <img src="/img/favicon.png" alt="노트북 앞의 개발자와 고양이 픽셀 캐릭터">
-            <span class="speech-bubble" aria-hidden="true">♥</span>
-        </div>
-
-        <div class="hello-card">
-            <span>&gt; hello_world():</span>
-            <span>Enjoy the process</span>
-            <span>Build the future <b>♥</b></span>
-        </div>
-
-        <nav class="side-nav" aria-label="주 메뉴">
-            <a href="/about/"><span>ⓘ</span> about me</a>
-            <a href="/search/"><span>⌕</span> search</a>
-            <a href="/tags/"><span>{ }</span> tags</a>
-            <a href="/archives/"><span>▣</span> archives</a>
-            <a href="https://github.com/shinyoungashleychoi"><span>◆</span> github</a>
+<body>
+    <a class="skip" href="#main">본문으로 건너뛰기</a>
+    <header class="masthead frame">
+        <a class="brand" href="/">Developer&#39;s Delight</a>
+        <nav aria-label="블로그 메뉴">
+            <a href="/">게시글</a>
+            <a href="/search/">검색</a>
+            <a href="/tags/">태그</a>
+            <a href="/archives/">아카이브</a>
+            <a href="/about/">소개</a>
         </nav>
+    </header>
 
-        <section class="mini-window now-playing" aria-labelledby="playing-title">
-            <div class="mini-window__title">
-                <span id="playing-title">Now Playing.</span>
-                <span>_ □ ×</span>
-            </div>
-            <div class="mini-window__body">
-                <span class="music-icon">♫</span>
-                <p><strong>Focus Mode</strong><br><span>Coding Playlist</span></p>
-                <div class="player-track"><i></i></div>
-                <div class="player-controls">◀◀ &nbsp; ▶ &nbsp; ▶▶</div>
-            </div>
-        </section>
-
-        <section class="mini-window learning" aria-labelledby="learning-title">
-            <div class="mini-window__title">
-                <span id="learning-title">Currently Learning</span>
-                <span>_ □ ×</span>
-            </div>
-            <div class="mini-window__body">
-                <ul>
-                    <li>Apache Iceberg</li>
-                    <li>Data Architecture</li>
-                    <li>Kubernetes</li>
-                </ul>
-                <div class="learning-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            </div>
-        </section>
-    </div>
-</aside>
-
-
-            <main class="site-main">
-                <header class="topbar">
-                    <div class="topbar__label">
-                        <span aria-hidden="true">▣</span>
-                        
-                            <span>Latest Posts</span>
-                        
-                    </div>
-                    <nav class="desktop-icons" aria-label="빠른 메뉴">
-                        <a href="/" aria-label="홈">♥</a>
-                        <a href="/tags/" aria-label="태그">★</a>
-                        <a href="/archives/" aria-label="아카이브">▰</a>
-                        <a href="/about/" aria-label="소개">▣</a>
-                        <a href="/search/" aria-label="검색">▤</a>
-                    </nav>
-                    <p class="topbar__note">welcome to my chaos playground ✧</p>
-                </header>
-
-                <div class="page-content">
+    <main id="main" class="frame main">
+        <div class="library">
+    <aside class="catalog" aria-labelledby="topics">
+        <h2 id="topics">주제</h2>
+        <ul>
+            
+            
+            
+                
                     
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                        <li><a href="/tags/iceberg/">iceberg</a> <span>6편</span></li>
+                        
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                        <li><a href="/tags/bigdata/">bigdata</a> <span>5편</span></li>
+                        
+                    
+                    
+                
+                    
+                        <li><a href="/tags/datalake/">datalake</a> <span>5편</span></li>
+                        
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                        <li><a href="/tags/algorithm/">algorithm</a> <span>4편</span></li>
+                        
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                
+            
+                
+                    
+                    
+                
+                    
+                        <li><a href="/tags/architecture/">architecture</a> <span>1편</span></li>
+                        
+                    
+                    
+                
+                    
+                    
+                
+                    
+                    
+                
+                    
+                        <li><a href="/tags/git/">git</a> <span>1편</span></li>
+                        
+                    
+                    
+                
+                    
+                    
+                
+                    
+                        <li><a href="/tags/journal/">journal</a> <span>1편</span></li>
+                        
+                    
+                    
+                
+                    
+                        <li><a href="/tags/kafka/">kafka</a> <span>1편</span></li>
+                        
+                    
+                    
+                
+        </ul>
+        <a class="secondary" href="/tags/">전체 주제</a>
+    </aside>
 
-
-<section class="featured-card">
-    <span class="featured-ribbon">FEATURED</span>
-    <div class="featured-illustration" aria-hidden="true">
-        <div class="retro-monitor">
-            <div class="retro-monitor__screen">?</div>
-            <div class="retro-monitor__base"></div>
+    <section>
+        <div class="section-line">
+            <h1>게시글</h1>
+            <a class="secondary" href="/archives/">아카이브</a>
         </div>
-        <span class="coffee">☕</span>
-        <span class="spark spark--a">✦</span>
-        <span class="spark spark--b">✧</span>
-    </div>
-    <div class="featured-copy">
-        <span class="category-pill">DEV LOG</span>
-        <h1><a href="/welcome/">Welcome!</a></h1>
-        <p>환영해요!</p>
-        <div class="post-facts">
-            <span>▦ 2025-01-11</span>
-            <span>◷ 1 min read</span>
-            <span>◇ </span>
-        </div>
-    </div>
-    <a class="read-more" href="/welcome/">READ MORE <span>▶</span></a>
-    <span class="window-controls card-controls" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span>
-</section>
+        <ul class="entries">
+            
+                
+                <li class="entry">
+                    <time datetime="2025-01-11">2025.01.11</time>
+                    <h2><a href="/welcome/">Welcome!</a></h2>
+                    
+                </li>
+            
+        </ul>
+        
+            <nav class="pagination" aria-label="페이지 이동">
+                
+                    <a href="/page2/">이전</a>
+                
+                <span>3 / 3</span>
+                
+            </nav>
+        
+    </section>
+</div>
 
+    </main>
 
-<section class="post-list" aria-label="글 목록">
-    
-</section>
-
-
-<nav class="pagination" aria-label="페이지 이동">
-    
-    <a href="/page2/">← Previous</a>
-    
-    <span>3 / 3</span>
-    
-</nav>
-
-
-                </div>
-            </main>
-        </div>
-
-        <footer class="site-footer">
-            <span>★ &nbsp; Thanks for visiting!</span>
-            <span>© 2026 Shinyoung.</span>
-            <span class="footer-clock" id="footer-clock">--:--</span>
-        </footer>
-    </div>
+    <footer class="frame footer">
+        <span class="author">
+            <img src="/img/favicon.png" alt="개발자와 고양이 픽셀 아트" width="816" height="654">
+            Shinyoung Choi
+        </span>
+        <a href="https://github.com/shinyoungashleychoi">GitHub</a>
+    </footer>
 
     <script src="/search.js"></script>
     <script src="/theme.js"></script>
