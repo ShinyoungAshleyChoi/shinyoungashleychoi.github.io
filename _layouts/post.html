@@ -2,46 +2,25 @@
 layout: default
 ---
 
-{% assign words = content | strip_html | number_of_words %}
-<article class="post">
-    <header class="post-hero">
-        <div class="post-hero__art" aria-hidden="true">
-            <div class="retro-monitor retro-monitor--small">
-                <div class="retro-monitor__screen">?</div>
-                <div class="retro-monitor__base"></div>
+<article class="article">
+    <header class="article-head">
+        <h1>{{ page.title | escape }}</h1>
+        {% if page.date or page.tags.size > 0 %}
+            <div class="article-meta">
+                {% if page.date %}
+                    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%Y.%m.%d" }}</time>
+                {% endif %}
+                {% for tag in page.tags %}
+                    <a href="{{ tag | prepend: '/tags/' | append: '/' | relative_url }}">#{{ tag | escape }}</a>
+                {% endfor %}
             </div>
-            <span>☕</span>
-        </div>
-        <div class="post-hero__copy">
-            <span class="category-pill">{{ page.tags | first | default: "DEV LOG" | upcase }}</span>
-            <h1>{{ page.title }}</h1>
-            {% if page.excerpt %}<p>{{ page.excerpt | strip_html | truncate: 115 }}</p>{% endif %}
-            <div class="post-facts">
-                <span>▦ {{ page.date | date: "%Y-%m-%d" }}</span>
-                <span>◷ {% assign minutes = words | divided_by: 200 %}{% if minutes < 1 %}1{% else %}{{ minutes }}{% endif %} min read</span>
-                <span>◇ {{ page.tags | join: ", " }}</span>
-            </div>
-        </div>
+        {% endif %}
     </header>
-
-    <div class="article-layout">
-        <section class="retro-window article-window">
-            <div class="retro-window__titlebar">
-                <span>✧ &nbsp; article.md</span>
-                <span class="window-controls"><i>_</i><i>□</i><i>×</i></span>
-            </div>
-            <div class="post-body" id="post-body">
-                {{ content }}
-                <div class="post-end-mark" aria-hidden="true">✦ &nbsp; ✧ &nbsp; ★ &nbsp; ✧ &nbsp; ✦</div>
-            </div>
-        </section>
-
-        <aside class="retro-window toc-window" aria-labelledby="toc-title">
-            <button class="retro-window__titlebar toc-toggle" id="toc-title" type="button" aria-expanded="true">
-                <span>ON THIS PAGE</span>
-                <span class="window-controls"><i>_</i><i>□</i><i>×</i></span>
-            </button>
-            <nav id="toc" class="toc" aria-label="이 글의 목차"></nav>
-        </aside>
+    <div class="reading">
+        <nav class="contents" aria-labelledby="toc-title" hidden>
+            <h2 id="toc-title">이 글의 목차</h2>
+            <ul id="toc"></ul>
+        </nav>
+        <div class="prose" id="post-body">{{ content }}</div>
     </div>
 </article>

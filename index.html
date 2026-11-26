@@ -3,68 +3,53 @@ layout: default
 paginate: true
 ---
 
-{% assign featured = paginator.posts | first %}
-{% if featured %}
-{% assign featured_words = featured.content | strip_html | number_of_words %}
-<section class="featured-card">
-    <span class="featured-ribbon">FEATURED</span>
-    <div class="featured-illustration" aria-hidden="true">
-        <div class="retro-monitor">
-            <div class="retro-monitor__screen">?</div>
-            <div class="retro-monitor__base"></div>
-        </div>
-        <span class="coffee">☕</span>
-        <span class="spark spark--a">✦</span>
-        <span class="spark spark--b">✧</span>
-    </div>
-    <div class="featured-copy">
-        <span class="category-pill">{{ featured.tags | first | default: "DEV LOG" | upcase }}</span>
-        <h1><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h1>
-        <p>{{ featured.excerpt | strip_html | strip_newlines | truncate: 120 }}</p>
-        <div class="post-facts">
-            <span>▦ {{ featured.date | date: "%Y-%m-%d" }}</span>
-            <span>◷ {% assign featured_minutes = featured_words | divided_by: 200 %}{% if featured_minutes < 1 %}1{% else %}{{ featured_minutes }}{% endif %} min read</span>
-            <span>◇ {{ featured.tags | join: ", " }}</span>
-        </div>
-    </div>
-    <a class="read-more" href="{{ featured.url | relative_url }}">READ MORE <span>▶</span></a>
-    <span class="window-controls card-controls" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span>
-</section>
-{% endif %}
+<div class="library">
+    <aside class="catalog" aria-labelledby="topics">
+        <h2 id="topics">주제</h2>
+        <ul>
+            {% assign topics = site.tags | sort %}
+            {% assign listed_topics = 0 %}
+            {% for count in (1..site.posts.size) reversed %}
+                {% for topic in topics %}
+                    {% if topic[1].size == count %}
+                        <li><a href="{{ topic[0] | prepend: '/tags/' | append: '/' | relative_url }}">{{ topic[0] | escape }}</a> <span>{{ count }}편</span></li>
+                        {% assign listed_topics = listed_topics | plus: 1 %}
+                    {% endif %}
+                    {% if listed_topics == 8 %}{% break %}{% endif %}
+                {% endfor %}
+                {% if listed_topics == 8 %}{% break %}{% endif %}
+            {% endfor %}
+        </ul>
+        <a class="secondary" href="{{ '/tags/' | relative_url }}">전체 주제</a>
+    </aside>
 
-<section class="post-list" aria-label="글 목록">
-    {% for post in paginator.posts offset:1 %}
-    {% assign words = post.content | strip_html | number_of_words %}
-    {% assign card_index = forloop.index0 | modulo: 5 %}
-    {% case card_index %}
-        {% when 0 %}{% assign card_color = "pink" %}
-        {% when 1 %}{% assign card_color = "yellow" %}
-        {% when 2 %}{% assign card_color = "coral" %}
-        {% when 3 %}{% assign card_color = "cyan" %}
-        {% else %}{% assign card_color = "lilac" %}
-    {% endcase %}
-    <article class="post-card post-card--{{ card_color }}">
-        <span class="post-card__icon" aria-hidden="true">
-            {% case card_color %}{% when 'pink' %}♥{% when 'yellow' %}⌘{% when 'coral' %}⌁{% when 'cyan' %}⌕{% else %}&lt;/&gt;{% endcase %}
-        </span>
-        <div class="post-card__copy">
-            <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-            <p>{{ post.date | date: "%Y-%m-%d" }} <b>•</b> {{ post.tags | join: ", " }}</p>
+    <section>
+        <div class="section-line">
+            <h1>{% if paginator.page == 1 %}최근 글{% else %}게시글{% endif %}</h1>
+            <a class="secondary" href="{{ '/archives/' | relative_url }}">아카이브</a>
         </div>
-        <span class="post-card__tag">{{ post.tags | first | default: "NOTE" | upcase }}</span>
-        <span class="post-card__star" aria-hidden="true">☆</span>
-    </article>
-    {% endfor %}
-</section>
-
-{% if paginator.total_pages > 1 %}
-<nav class="pagination" aria-label="페이지 이동">
-    {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | relative_url }}">← Previous</a>
-    {% endif %}
-    <span>{{ paginator.page }} / {{ paginator.total_pages }}</span>
-    {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | relative_url }}">Next →</a>
-    {% endif %}
-</nav>
-{% endif %}
+        <ul class="entries">
+            {% for post in paginator.posts %}
+                {% assign tag = post.tags | first %}
+                <li class="entry">
+                    <time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+                    <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
+                    {% if tag %}
+                        <a class="entry-tag" href="{{ tag | prepend: '/tags/' | append: '/' | relative_url }}">#{{ tag | escape }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% if paginator.total_pages > 1 %}
+            <nav class="pagination" aria-label="페이지 이동">
+                {% if paginator.previous_page %}
+                    <a href="{{ paginator.previous_page_path | relative_url }}">이전</a>
+                {% endif %}
+                <span>{{ paginator.page }} / {{ paginator.total_pages }}</span>
+                {% if paginator.next_page %}
+                    <a href="{{ paginator.next_page_path | relative_url }}">다음</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+    </section>
+</div>

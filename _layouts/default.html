@@ -3,58 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#4338a8">
+    <meta name="theme-color" content="#ffffff">
     <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 155 }}">
     <link rel="stylesheet" href="{{ '/css/pygments.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/css/styles.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/css/stackroom.css' | relative_url }}">
     <link rel="shortcut icon" href="{{ '/img/favicon.png' | relative_url }}">
 </head>
-<body class="{% if page.layout == 'post' %}post-page{% else %}list-page{% endif %}">
-    <div class="desktop-shell">
-        <div class="os-titlebar" aria-hidden="true">
-            <span class="os-titlebar__mark">✦</span>
-            <span>Developer's Delight</span>
-            <span class="window-controls"><i>_</i><i>□</i><i>×</i></span>
-        </div>
+<body>
+    <a class="skip" href="#main">본문으로 건너뛰기</a>
+    <header class="masthead frame">
+        <a class="brand" href="{{ '/' | relative_url }}">{{ site.title | escape }}</a>
+        <nav aria-label="블로그 메뉴">
+            <a href="{{ '/' | relative_url }}">게시글</a>
+            <a href="{{ '/search/' | relative_url }}">검색</a>
+            <a href="{{ '/tags/' | relative_url }}">태그</a>
+            <a href="{{ '/archives/' | relative_url }}">아카이브</a>
+            <a href="{{ '/about/' | relative_url }}">소개</a>
+        </nav>
+    </header>
 
-        <div class="site-grid">
-            {% include sidebar.html %}
+    <main id="main" class="frame main">
+        {{ content }}
+    </main>
 
-            <main class="site-main">
-                <header class="topbar">
-                    <div class="topbar__label">
-                        <span aria-hidden="true">▣</span>
-                        {% if page.layout == 'post' %}
-                            <a href="{{ '/' | relative_url }}">Home</a>
-                            <span class="crumb">›</span>
-                            <span>{{ page.title | truncate: 34 }}</span>
-                        {% else %}
-                            <span>Latest Posts</span>
-                        {% endif %}
-                    </div>
-                    <nav class="desktop-icons" aria-label="빠른 메뉴">
-                        <a href="{{ '/' | relative_url }}" aria-label="홈">♥</a>
-                        <a href="{{ '/tags/' | relative_url }}" aria-label="태그">★</a>
-                        <a href="{{ '/archives/' | relative_url }}" aria-label="아카이브">▰</a>
-                        <a href="{{ '/about/' | relative_url }}" aria-label="소개">▣</a>
-                        <a href="{{ '/search/' | relative_url }}" aria-label="검색">▤</a>
-                    </nav>
-                    <p class="topbar__note">welcome to my chaos playground ✧</p>
-                </header>
-
-                <div class="page-content">
-                    {{ content }}
-                </div>
-            </main>
-        </div>
-
-        <footer class="site-footer">
-            <span>★ &nbsp; Thanks for visiting!</span>
-            <span>© {{ site.time | date: "%Y" }} Shinyoung.</span>
-            <span class="footer-clock" id="footer-clock">--:--</span>
-        </footer>
-    </div>
+    <footer class="frame footer">
+        <span class="author">
+            <img src="{{ '/img/favicon.png' | relative_url }}" alt="개발자와 고양이 픽셀 아트" width="816" height="654">
+            Shinyoung Choi
+        </span>
+        <a href="https://github.com/shinyoungashleychoi">GitHub</a>
+    </footer>
 
     <script src="{{ '/search.js' | relative_url }}"></script>
     <script src="{{ '/theme.js' | relative_url }}"></script>
